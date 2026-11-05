@@ -1,0 +1,1280 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STYLE GUIDE | 나만의 스타일 찾기</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+  --black: #20201e;
+  --gray: #777773;
+  --cream: #f6f4ef;
+  --white: #ffffff;
+  --line: #e8e5df;
+  --accent: #a68b6a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--black);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+/* HEADER */
+
+header {
+  height: 76px;
+  padding: 0 7%;
+  background: rgba(255,255,255,.96);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+nav {
+  display: flex;
+  gap: 35px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--black);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+nav a:hover { color: var(--accent); }
+
+/* HERO */
+
+.hero {
+  min-height: 510px;
+  padding: 90px 8%;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(22,22,20,.78), rgba(22,22,20,.1)),
+    url('https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=1800')
+    center 35% / cover;
+  color: white;
+}
+
+.hero-content { max-width: 650px; }
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: #dfc9aa;
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(43px, 6vw, 76px);
+  line-height: 1.13;
+  margin-bottom: 25px;
+}
+
+.hero p {
+  font-size: 15px;
+  line-height: 2;
+  color: #e4e2df;
+  margin-bottom: 35px;
+}
+
+.primary-btn {
+  padding: 15px 30px;
+  background: white;
+  color: var(--black);
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  transition: .2s;
+}
+
+.primary-btn:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* COMMON */
+
+.section {
+  padding: 85px 8%;
+}
+
+.section-heading {
+  margin-bottom: 35px;
+}
+
+.section-heading .sub {
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 3px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.section-heading h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+.section-heading p {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.8;
+}
+
+/* SELECTOR */
+
+.explore {
+  background: white;
+}
+
+.filter-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 35px;
+  border: 1px solid var(--line);
+  background: #faf9f6;
+}
+
+.filter-group h3 {
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.filter-btn {
+  border: 1px solid #dedbd5;
+  background: white;
+  padding: 10px 16px;
+  font-size: 12px;
+  color: #555;
+  transition: .2s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--black);
+  color: white;
+  border-color: var(--black);
+}
+
+.search-area {
+  display: flex;
+  margin-top: 25px;
+  gap: 10px;
+}
+
+.search-area input {
+  flex: 1;
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid var(--line);
+  outline: none;
+  background: white;
+  font-size: 13px;
+}
+
+.search-area input:focus {
+  border-color: var(--accent);
+}
+
+.search-area button {
+  padding: 0 28px;
+  border: none;
+  background: var(--black);
+  color: white;
+  font-size: 13px;
+}
+
+/* STYLE CARDS */
+
+.style-section {
+  background: var(--cream);
+}
+
+.result-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 13px;
+  color: var(--gray);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.style-card {
+  background: white;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition: .3s;
+  cursor: pointer;
+}
+
+.style-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0,0,0,.08);
+}
+
+.card-image {
+  height: 250px;
+  overflow: hidden;
+  background: #e6e0d6;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: .5s;
+}
+
+.style-card:hover img {
+  transform: scale(1.05);
+}
+
+.card-content {
+  padding: 23px;
+}
+
+.card-tag {
+  display: inline-block;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.card-content h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.card-content p {
+  color: var(--gray);
+  font-size: 12px;
+  line-height: 1.8;
+  min-height: 44px;
+}
+
+.card-items {
+  border-top: 1px solid var(--line);
+  margin-top: 17px;
+  padding-top: 14px;
+  color: #777;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.more {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* OCCASIONS */
+
+.occasion-section { background: white; }
+
+.occasion-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.occasion-card {
+  padding: 35px 20px;
+  background: #f5f2ed;
+  text-align: center;
+  border: 1px solid transparent;
+  transition: .2s;
+  cursor: pointer;
+}
+
+.occasion-card:hover {
+  border-color: var(--accent);
+  background: #fff;
+}
+
+.occasion-icon {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.occasion-card h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.occasion-card p {
+  font-size: 11px;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* BASIC GUIDE */
+
+.basic-section {
+  background: #eae6df;
+}
+
+.basic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.basic-card {
+  background: white;
+  padding: 30px;
+}
+
+.basic-card .number {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+
+.basic-card h3 {
+  font-size: 17px;
+  margin-bottom: 12px;
+}
+
+.basic-card p {
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 2;
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  padding: 20px;
+}
+
+.modal.show { display: flex; }
+
+.modal-content {
+  background: white;
+  max-width: 650px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 35px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  border: none;
+  background: none;
+  font-size: 28px;
+}
+
+.modal-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 2;
+  margin-bottom: 18px;
+}
+
+.modal-content h3 {
+  font-size: 15px;
+  margin: 20px 0 10px;
+}
+
+.modal-content ul {
+  padding-left: 20px;
+  color: #666;
+  font-size: 13px;
+  line-height: 2;
+}
+
+/* FOOTER */
+
+footer {
+  background: #222220;
+  color: white;
+  padding: 50px 8%;
+  text-align: center;
+}
+
+footer .logo { margin-bottom: 15px; }
+
+footer p {
+  font-size: 11px;
+  color: #aaa;
+  line-height: 2;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 900px) {
+  .filter-box { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+  .occasion-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media(max-width: 600px) {
+  header { padding: 0 5%; height: 65px; }
+  .logo { font-size: 21px; }
+  nav { gap: 12px; }
+  nav a { font-size: 10px; }
+  .hero { min-height: 430px; padding: 60px 7%; }
+  .section { padding: 60px 6%; }
+  .section-heading h2 { font-size: 30px; }
+  .card-grid { grid-template-columns: 1fr; }
+  .card-image { height: 280px; }
+  .occasion-grid { grid-template-columns: repeat(2, 1fr); }
+  .basic-grid { grid-template-columns: 1fr; }
+  .filter-box { padding: 22px; }
+  .modal-content { padding: 25px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">STYLE<span>.</span>GUIDE</div>
+  <nav>
+    <a href="#explore">스타일 찾기</a>
+    <a href="#occasion">상황별 코디</a>
+    <a href="#basic">패션 기초</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">YOUR STYLE, YOUR STORY</div>
+    <h1>Find Your<br>Own Style.</h1>
+    <p>
+      패션이 어렵고 무엇을 입어야 할지 모르겠다면?<br>
+      나이와 성별, 상황에 맞는 다양한 스타일을 알아보고<br>
+      나에게 어울리는 패션을 찾아보세요.
+    </p>
+    <button class="primary-btn"
+      onclick="document.querySelector('#explore').scrollIntoView()">
+      나만의 스타일 찾기 →
+    </button>
+  </div>
+</section>
+
+<section class="section explore" id="explore">
+  <div class="section-heading">
+    <div class="sub">STYLE FINDER</div>
+    <h2>어떤 스타일을 찾고 있나요?</h2>
+    <p>원하는 조건을 선택하면 관련된 스타일을 찾아볼 수 있습니다.</p>
+  </div>
+
+  <div class="filter-box">
+
+    <div class="filter-group">
+      <h3>01. 성별</h3>
+      <div class="filter-buttons" id="gender">
+        <button class="filter-btn active" data-value="전체">전체</button>
+        <button class="filter-btn" data-value="남성">남성</button>
+        <button class="filter-btn" data-value="여성">여성</button>
+        <button class="filter-btn" data-value="공용">공용</button>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h3>02. 연령대</h3>
+      <div class="filter-buttons" id="age">
+        <button class="filter-btn active" data-value="전체">전체</button>
+        <button class="filter-btn" data-value="10대">10대</button>
+        <button class="filter-btn" data-value="20대">20대</button>
+        <button class="filter-btn" data-value="30대">30대</button>
+        <button class="filter-btn" data-value="40대">40대</button>
+        <button class="filter-btn" data-value="50대">50대</button>
+        <button class="filter-btn" data-value="60대 이상">60대 이상</button>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h3>03. 착용 상황</h3>
+      <div class="filter-buttons" id="occasion-filter">
+        <button class="filter-btn active" data-value="전체">전체</button>
+        <button class="filter-btn" data-value="학교">학교·학원</button>
+        <button class="filter-btn" data-value="직장">직장</button>
+        <button class="filter-btn" data-value="일상">일상</button>
+        <button class="filter-btn" data-value="데이트">데이트</button>
+        <button class="filter-btn" data-value="여행">여행</button>
+        <button class="filter-btn" data-value="모임">모임·행사</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="search-area">
+    <input id="search" type="text"
+      placeholder="스타일 검색 (예: 미니멀, 스트리트, 댄디...)">
+    <button onclick="renderCards()">검색</button>
+  </div>
+</section>
+
+<section class="section style-section">
+  <div class="section-heading">
+    <div class="sub">STYLE COLLECTION</div>
+    <h2>Explore Fashion</h2>
+    <p>다양한 패션 스타일을 살펴보고 마음에 드는 스타일을 선택해 보세요.</p>
+  </div>
+
+  <div class="result-info">
+    <span id="result-count">전체 스타일</span>
+    <span>카드를 클릭하면 자세히 볼 수 있습니다.</span>
+  </div>
+
+  <div class="card-grid" id="card-grid"></div>
+</section>
+
+<section class="section occasion-section" id="occasion">
+  <div class="section-heading">
+    <div class="sub">DRESS FOR EVERY MOMENT</div>
+    <h2>상황별 패션 가이드</h2>
+    <p>어디에 가느냐에 따라 옷차림도 달라집니다.</p>
+  </div>
+
+  <div class="occasion-grid">
+
+    <div class="occasion-card" onclick="chooseOccasion('학교')">
+      <div class="occasion-icon">🎒</div>
+      <h3>학교 · 학원</h3>
+      <p>편안하고 자연스러운 학생 패션</p>
+    </div>
+
+    <div class="occasion-card" onclick="chooseOccasion('직장')">
+      <div class="occasion-icon">💼</div>
+      <h3>회사 · 출근</h3>
+      <p>깔끔하고 신뢰감 있는 오피스룩</p>
+    </div>
+
+    <div class="occasion-card" onclick="chooseOccasion('일상')">
+      <div class="occasion-icon">☕</div>
+      <h3>일상 · 외출</h3>
+      <p>편안하면서도 멋스러운 데일리룩</p>
+    </div>
+
+    <div class="occasion-card" onclick="chooseOccasion('데이트')">
+      <div class="occasion-icon">🌷</div>
+      <h3>데이트</h3>
+      <p>깔끔하고 호감 가는 스타일</p>
+    </div>
+
+    <div class="occasion-card" onclick="chooseOccasion('여행')">
+      <div class="occasion-icon">✈️</div>
+      <h3>여행</h3>
+      <p>활동성과 스타일을 모두 고려한 코디</p>
+    </div>
+
+    <div class="occasion-card" onclick="chooseOccasion('모임')">
+      <div class="occasion-icon">🥂</div>
+      <h3>모임 · 행사</h3>
+      <p>격식과 개성을 살린 스타일</p>
+    </div>
+
+    <div class="occasion-card" onclick="chooseOccasion('일상')">
+      <div class="occasion-icon">🏃</div>
+      <h3>운동 · 스포츠</h3>
+      <p>기능성과 편안함을 살린 애슬레저</p>
+    </div>
+
+    <div class="occasion-card" onclick="chooseOccasion('전체')">
+      <div class="occasion-icon">✨</div>
+      <h3>모든 상황</h3>
+      <p>다양한 스타일 한눈에 보기</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section basic-section" id="basic">
+  <div class="section-heading">
+    <div class="sub">FASHION FOR BEGINNERS</div>
+    <h2>패션 기초 배우기</h2>
+    <p>옷을 잘 입기 위해 알아두면 좋은 기본 지식입니다.</p>
+  </div>
+
+  <div class="basic-grid">
+
+    <div class="basic-card">
+      <div class="number">01</div>
+      <h3>색상 조합</h3>
+      <p>
+        처음에는 흰색, 검은색, 회색, 네이비,
+        베이지 등 활용하기 쉬운 기본 색상부터
+        시작하세요. 한 코디에 너무 많은 색상을
+        사용하지 않는 것이 좋습니다.
+      </p>
+    </div>
+
+    <div class="basic-card">
+      <div class="number">02</div>
+      <h3>옷의 핏(Fit)</h3>
+      <p>
+        슬림핏, 레귤러핏, 오버핏, 와이드핏 등
+        옷의 실루엣을 이해하세요.
+        같은 옷도 핏에 따라 전체적인 분위기가
+        크게 달라집니다.
+      </p>
+    </div>
+
+    <div class="basic-card">
+      <div class="number">03</div>
+      <h3>기본 아이템</h3>
+      <p>
+        무지 티셔츠, 셔츠, 데님 팬츠,
+        슬랙스, 니트, 재킷, 깔끔한 운동화 등
+        여러 옷과 조합하기 쉬운 아이템부터
+        준비하는 것이 좋습니다.
+      </p>
+    </div>
+
+    <div class="basic-card">
+      <div class="number">04</div>
+      <h3>계절별 코디</h3>
+      <p>
+        봄과 가을에는 셔츠와 가벼운 재킷,
+        여름에는 통기성 좋은 소재,
+        겨울에는 코트와 패딩 등
+        계절과 기온에 맞춰 옷을 선택하세요.
+      </p>
+    </div>
+
+    <div class="basic-card">
+      <div class="number">05</div>
+      <h3>체형과 비율</h3>
+      <p>
+        어깨선, 상의 길이, 바지 기장과
+        허리 위치 등을 살펴보세요.
+        체형을 무조건 보정하기보다는
+        편안하고 자연스러운 균형이 중요합니다.
+      </p>
+    </div>
+
+    <div class="basic-card">
+      <div class="number">06</div>
+      <h3>신발과 액세서리</h3>
+      <p>
+        운동화, 로퍼, 부츠 등 신발의 종류와
+        가방, 시계, 벨트 등의 액세서리를
+        적절히 활용하면 코디의 완성도를
+        높일 수 있습니다.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="logo">STYLE<span>.</span>GUIDE</div>
+  <p>
+    FIND YOUR OWN STYLE.<br>
+    누구나 자신만의 스타일을 찾을 수 있도록.<br><br>
+    © 2026 STYLE GUIDE. All Rights Reserved.
+  </p>
+</footer>
+
+<!-- STYLE DETAIL MODAL -->
+
+<div class="modal" id="modal" onclick="closeOutside(event)">
+  <div class="modal-content">
+    <button class="close" onclick="closeModal()">×</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+
+// ==================================
+// STYLE DATABASE
+// ==================================
+
+const styles = [
+
+{
+ name:"캐주얼룩",
+ english:"CASUAL",
+ category:"편안한 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["학교","직장","일상","데이트","여행"],
+ desc:"편안함과 자연스러움을 중심으로 한 가장 기본적인 스타일입니다.",
+ items:"티셔츠 · 데님 · 니트 · 스니커즈",
+ detail:"캐주얼룩은 일상생활에서 가장 활용도가 높은 스타일입니다. 편안한 옷을 중심으로 구성하되 색상과 핏을 맞추면 자연스럽고 세련된 느낌을 만들 수 있습니다.",
+ recommend:"기본 티셔츠 + 스트레이트 데님 + 깔끔한 운동화",
+ image:"photo-1525507119028-ed4c629a60a3"
+},
+
+{
+ name:"미니멀룩",
+ english:"MINIMAL",
+ category:"심플한 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["직장","일상","데이트","모임"],
+ desc:"불필요한 장식을 줄이고 깔끔한 실루엣과 색상을 강조합니다.",
+ items:"무지 티셔츠 · 슬랙스 · 코트 · 로퍼",
+ detail:"미니멀룩은 단순한 디자인과 절제된 색상으로 세련된 분위기를 만드는 스타일입니다. 검정, 흰색, 회색, 베이지 등의 색상이 자주 사용됩니다.",
+ recommend:"무지 니트 + 와이드 슬랙스 + 미니멀 스니커즈",
+ image:"photo-1483985988355-763728e1935b"
+},
+
+{
+ name:"댄디룩",
+ english:"DANDY",
+ category:"단정한 스타일",
+ gender:["남성"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["학교","직장","일상","데이트","모임"],
+ desc:"깔끔하고 단정하면서도 세련된 남성적인 분위기를 강조합니다.",
+ items:"셔츠 · 니트 · 슬랙스 · 로퍼",
+ detail:"댄디룩은 단정한 셔츠와 니트, 슬랙스 등을 활용하는 스타일입니다. 지나치게 격식을 차리지 않으면서도 정돈된 인상을 줄 수 있습니다.",
+ recommend:"옥스퍼드 셔츠 + 니트 + 슬랙스 + 로퍼",
+ image:"photo-1617137968427-85924c800a22"
+},
+
+{
+ name:"스트리트룩",
+ english:"STREETWEAR",
+ category:"개성 있는 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["학교","일상","여행"],
+ desc:"자유로운 실루엣과 개성 있는 아이템을 활용하는 스타일입니다.",
+ items:"후드티 · 와이드 팬츠 · 스니커즈 · 볼캡",
+ detail:"스트리트룩은 도시 문화와 음악, 스케이트보드 문화 등에서 영향을 받은 스타일입니다. 오버핏과 그래픽 디자인, 독특한 운동화가 특징입니다.",
+ recommend:"오버핏 후드티 + 와이드 데님 + 스니커즈",
+ image:"photo-1523398002811-999ca8dec234"
+},
+
+{
+ name:"비즈니스 캐주얼",
+ english:"BUSINESS CASUAL",
+ category:"직장인 스타일",
+ gender:["남성","여성"],
+ ages:["20대","30대","40대","50대","60대 이상"],
+ occasions:["직장","모임"],
+ desc:"정장보다 편안하지만 격식과 단정함을 유지하는 스타일입니다.",
+ items:"셔츠 · 재킷 · 치노 팬츠 · 슬랙스",
+ detail:"비즈니스 캐주얼은 일반적인 정장보다 편안하고 자유로운 직장인 복장입니다. 회사의 복장 규정에 맞춰 셔츠, 재킷, 슬랙스 등을 활용합니다.",
+ recommend:"셔츠 + 재킷 + 슬랙스 + 로퍼",
+ image:"photo-1591047139829-d91aecb6caea"
+},
+
+{
+ name:"오피스룩",
+ english:"OFFICE LOOK",
+ category:"직장인 스타일",
+ gender:["남성","여성"],
+ ages:["20대","30대","40대","50대","60대 이상"],
+ occasions:["직장","모임"],
+ desc:"직장에서 신뢰감과 전문적인 인상을 주는 단정한 스타일입니다.",
+ items:"재킷 · 셔츠 · 슬랙스 · 블라우스",
+ detail:"오피스룩은 직장 환경에 어울리는 옷차림입니다. 업종과 회사 분위기에 따라 정장부터 스마트 캐주얼까지 다양하게 구성할 수 있습니다.",
+ recommend:"싱글 재킷 + 셔츠 + 슬랙스",
+ image:"photo-1485230895905-ec40ba36b9bc"
+},
+
+{
+ name:"클래식룩",
+ english:"CLASSIC",
+ category:"단정한 스타일",
+ gender:["남성","여성","공용"],
+ ages:["20대","30대","40대","50대","60대 이상"],
+ occasions:["직장","일상","데이트","모임"],
+ desc:"유행을 크게 타지 않는 전통적이고 세련된 스타일입니다.",
+ items:"테일러드 재킷 · 셔츠 · 코트 · 로퍼",
+ detail:"클래식룩은 시간이 지나도 자연스럽게 어울리는 디자인을 중심으로 합니다. 기본적인 색상과 좋은 소재, 균형 잡힌 실루엣이 중요합니다.",
+ recommend:"셔츠 + 테일러드 재킷 + 스트레이트 팬츠",
+ image:"photo-1503342217505-b0a15ec3261c"
+},
+
+{
+ name:"프레피룩",
+ english:"PREPPY",
+ category:"단정한 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대","50대"],
+ occasions:["학교","일상","데이트","모임"],
+ desc:"미국 대학생들의 단정한 캠퍼스 패션에서 영감을 얻은 스타일입니다.",
+ items:"니트 · 셔츠 · 카디건 · 로퍼 · 플리츠 스커트",
+ detail:"프레피룩은 단정한 교복이나 대학생 패션을 연상시키는 스타일입니다. 니트와 셔츠, 체크 패턴, 로퍼 등을 활용합니다.",
+ recommend:"셔츠 + 니트 + 치노 팬츠 또는 플리츠 스커트",
+ image:"photo-1539109136881-3be0616acf4b"
+},
+
+{
+ name:"스포티룩",
+ english:"SPORTY",
+ category:"활동적인 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["학교","일상","여행"],
+ desc:"스포츠웨어의 기능성과 활동적인 분위기를 활용합니다.",
+ items:"트랙 재킷 · 조거 팬츠 · 운동화",
+ detail:"스포티룩은 운동복에서 영감을 얻은 스타일입니다. 활동하기 편한 소재와 운동화, 트랙 재킷 등을 활용합니다.",
+ recommend:"트랙 재킷 + 조거 팬츠 + 러닝화",
+ image:"photo-1515886657613-9f3515b0c78f"
+},
+
+{
+ name:"애슬레저룩",
+ english:"ATHLEISURE",
+ category:"활동적인 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["일상","여행"],
+ desc:"운동복과 일상복을 자연스럽게 결합한 편안한 스타일입니다.",
+ items:"레깅스 · 조거 팬츠 · 기능성 티셔츠",
+ detail:"애슬레저룩은 운동할 때뿐 아니라 일상에서도 활용할 수 있는 스타일입니다. 기능성 소재와 편안한 핏이 특징입니다.",
+ recommend:"기능성 티셔츠 + 조거 팬츠 + 운동화",
+ image:"photo-1538805060514-97d9cc17730c"
+},
+
+{
+ name:"빈티지룩",
+ english:"VINTAGE",
+ category:"개성 있는 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["학교","일상","데이트"],
+ desc:"과거 시대의 패션과 오래된 듯한 분위기를 현대적으로 활용합니다.",
+ items:"워싱 데님 · 가죽 재킷 · 체크 셔츠",
+ detail:"빈티지룩은 특정 시대의 의상이나 색감, 소재를 활용합니다. 낡은 느낌의 데님이나 가죽 제품, 레트로 디자인이 특징입니다.",
+ recommend:"빈티지 데님 + 프린팅 티셔츠 + 가죽 재킷",
+ image:"photo-1529139574466-a303027c1d8b"
+},
+
+{
+ name:"그런지룩",
+ english:"GRUNGE",
+ category:"개성 있는 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대"],
+ occasions:["학교","일상"],
+ desc:"자유롭고 반항적인 분위기를 표현하는 록 음악 기반의 스타일입니다.",
+ items:"체크 셔츠 · 찢어진 데님 · 워커 · 레이어드",
+ detail:"1990년대 그런지 음악 문화와 관련된 스타일입니다. 자연스럽게 흐트러진 실루엣과 체크 셔츠, 데님, 부츠 등을 활용합니다.",
+ recommend:"체크 셔츠 + 오버핏 티셔츠 + 워싱 데님",
+ image:"photo-1523398002811-999ca8dec234"
+},
+
+{
+ name:"페미닌룩",
+ english:"FEMININE",
+ category:"여성 스타일",
+ gender:["여성"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["학교","직장","일상","데이트","모임"],
+ desc:"부드러운 실루엣과 섬세한 디테일로 여성스러운 분위기를 강조합니다.",
+ items:"블라우스 · 플레어 스커트 · 원피스 · 플랫슈즈",
+ detail:"페미닌룩은 부드러운 소재와 자연스러운 실루엣, 섬세한 디자인을 활용합니다. 반드시 치마나 밝은 색상을 입어야 하는 것은 아닙니다.",
+ recommend:"블라우스 + 플레어 스커트 + 플랫슈즈",
+ image:"photo-1483985988355-763728e1935b"
+},
+
+{
+ name:"시크룩",
+ english:"CHIC",
+ category:"세련된 스타일",
+ gender:["남성","여성"],
+ ages:["20대","30대","40대","50대","60대 이상"],
+ occasions:["직장","일상","데이트","모임"],
+ desc:"절제된 디자인과 세련된 색상으로 도시적인 분위기를 연출합니다.",
+ items:"블랙 재킷 · 슬랙스 · 롱코트 · 앵클부츠",
+ detail:"시크룩은 깔끔하면서도 도회적인 분위기가 특징입니다. 블랙과 그레이, 네이비 등의 색상과 간결한 디자인을 자주 사용합니다.",
+ recommend:"블랙 재킷 + 슬랙스 + 가죽 신발",
+ image:"photo-1483985988355-763728e1935b"
+},
+
+{
+ name:"로맨틱룩",
+ english:"ROMANTIC",
+ category:"감성적인 스타일",
+ gender:["여성"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["데이트","일상","모임"],
+ desc:"꽃무늬와 레이스, 부드러운 소재 등으로 사랑스럽고 부드러운 분위기를 연출합니다.",
+ items:"레이스 블라우스 · 플라워 원피스 · 리본",
+ detail:"로맨틱룩은 부드러운 색상과 여성스러운 장식, 자연스럽게 흐르는 실루엣이 특징입니다.",
+ recommend:"플라워 원피스 + 가디건 + 메리제인 슈즈",
+ image:"photo-1515886657613-9f3515b0c78f"
+},
+
+{
+ name:"놈코어룩",
+ english:"NORMCORE",
+ category:"심플한 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["학교","직장","일상","여행"],
+ desc:"특별히 꾸미지 않은 듯 자연스럽고 평범한 패션을 추구합니다.",
+ items:"기본 티셔츠 · 데님 · 스웨트셔츠 · 스니커즈",
+ detail:"놈코어는 평범함을 자연스럽게 받아들이는 스타일입니다. 기본 아이템을 중심으로 과도한 장식을 줄입니다.",
+ recommend:"무지 티셔츠 + 스트레이트 데님 + 기본 운동화",
+ image:"photo-1525507119028-ed4c629a60a3"
+},
+
+{
+ name:"올드머니룩",
+ english:"OLD MONEY",
+ category:"고급스러운 스타일",
+ gender:["남성","여성"],
+ ages:["20대","30대","40대","50대","60대 이상"],
+ occasions:["직장","일상","데이트","모임"],
+ desc:"화려한 로고보다 고급스러운 소재와 절제된 디자인을 강조합니다.",
+ items:"케이블 니트 · 셔츠 · 슬랙스 · 로퍼",
+ detail:"올드머니룩은 차분한 색상과 단정한 실루엣, 고급스러운 소재를 활용하는 스타일입니다. 눈에 띄는 브랜드 로고보다 전체적인 조화를 중요하게 생각합니다.",
+ recommend:"니트 + 셔츠 + 슬랙스 + 로퍼",
+ image:"photo-1617137968427-85924c800a22"
+},
+
+{
+ name:"워크웨어룩",
+ english:"WORKWEAR",
+ category:"실용적인 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["학교","일상","여행"],
+ desc:"작업복의 기능적인 디자인과 튼튼한 소재에서 영감을 얻은 스타일입니다.",
+ items:"워크 재킷 · 카고 팬츠 · 데님 · 워커",
+ detail:"워크웨어룩은 실용적인 주머니와 탄탄한 소재, 여유 있는 실루엣이 특징입니다. 일상에서도 활용할 수 있는 디자인으로 발전했습니다.",
+ recommend:"워크 재킷 + 기본 티셔츠 + 카펜터 팬츠",
+ image:"photo-1523398002811-999ca8dec234"
+},
+
+{
+ name:"다크 아카데미아",
+ english:"DARK ACADEMIA",
+ category:"감성적인 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대"],
+ occasions:["학교","일상","데이트"],
+ desc:"고전적인 대학과 문학, 예술에서 영감을 얻은 차분하고 지적인 스타일입니다.",
+ items:"트위드 재킷 · 니트 · 셔츠 · 로퍼",
+ detail:"다크 아카데미아는 브라운, 버건디, 블랙 등 어두운 색상과 셔츠, 니트, 클래식한 재킷을 조합합니다.",
+ recommend:"셔츠 + 니트 + 체크 팬츠 + 로퍼",
+ image:"photo-1503342217505-b0a15ec3261c"
+},
+
+{
+ name:"고프코어룩",
+ english:"GORPCORE",
+ category:"활동적인 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대","40대","50대","60대 이상"],
+ occasions:["일상","여행"],
+ desc:"아웃도어 의류와 기능성 아이템을 도시 패션에 접목한 스타일입니다.",
+ items:"바람막이 · 등산화 · 플리스 · 카고 팬츠",
+ detail:"고프코어는 등산과 아웃도어 활동에서 사용되는 기능성 의류를 일상 패션에 활용합니다. 방수, 방풍, 수납 등의 실용성이 특징입니다.",
+ recommend:"기능성 바람막이 + 카고 팬츠 + 트레킹화",
+ image:"photo-1551632811-561732d1e306"
+},
+
+{
+ name:"Y2K룩",
+ english:"Y2K",
+ category:"트렌디한 스타일",
+ gender:["남성","여성","공용"],
+ ages:["10대","20대","30대"],
+ occasions:["학교","일상","데이트"],
+ desc:"1990년대 말부터 2000년대 초반의 패션을 현대적으로 재해석합니다.",
+ items:"와이드 데님 · 크롭 상의 · 메탈릭 액세서리",
+ detail:"Y2K는 2000년대 초반의 대중문화와 패션에서 영향을 받았습니다. 독특한 색상, 데님, 액세서리와 다양한 실루엣이 특징입니다.",
+ recommend:"와이드 데님 + 그래픽 티셔츠 + 레트로 운동화",
+ image:"photo-1529139574466-a303027c1d8b"
+}
+
+];
+
+// ==================================
+// FILTER STATE
+// ==================================
+
+let selected = {
+ gender:"전체",
+ age:"전체",
+ occasion:"전체"
+};
+
+// FILTER BUTTONS
+
+document.querySelectorAll('.filter-group').forEach(group => {
+  group.querySelectorAll('.filter-btn').forEach(button => {
+
+    button.addEventListener('click', () => {
+
+      group.querySelectorAll('.filter-btn')
+        .forEach(b => b.classList.remove('active'));
+
+      button.classList.add('active');
+
+      const groupId = group.querySelector('.filter-buttons').id;
+
+      if(groupId === 'gender')
+        selected.gender = button.dataset.value;
+
+      if(groupId === 'age')
+        selected.age = button.dataset.value;
+
+      if(groupId === 'occasion-filter')
+        selected.occasion = button.dataset.value;
+
+      renderCards();
+    });
+
+  });
+});
+
+// ==================================
+// RENDER CARDS
+// ==================================
+
+function renderCards() {
+
+  const keyword = document
+    .getElementById('search')
+    .value.trim()
+    .toLowerCase();
+
+  const filtered = styles.filter(style => {
+
+    const genderMatch =
+      selected.gender === "전체" ||
+      style.gender.includes(selected.gender);
+
+    const ageMatch =
+      selected.age === "전체" ||
+      style.ages.includes(selected.age);
+
+    const occasionMatch =
+      selected.occasion === "전체" ||
+      style.occasions.includes(selected.occasion);
+
+    const keywordMatch =
+      (style.name + style.english + style.category +
+       style.desc + style.items)
+      .toLowerCase().includes(keyword);
+
+    return genderMatch && ageMatch &&
+      occasionMatch && keywordMatch;
+
+  });
+
+  const grid = document.getElementById('card-grid');
+
+  document.getElementById('result-count').textContent =
+    `총 ${filtered.length}개의 스타일`;
+
+  if(filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:70px 10px;color:#888">
+        <h3>검색 결과가 없습니다.</h3>
+        <p style="margin-top:12px;font-size:13px">
+          다른 조건이나 검색어를 입력해 보세요.
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(style => `
+
+    <article class="style-card"
+      onclick="openDetail('${style.name}')">
+
+      <div class="card-image">
+        <img
+          src="https://images.unsplash.com/${style.image}?auto=format&fit=crop&w=800&q=80"
+          alt="${style.name}"
+          loading="lazy">
+      </div>
+
+      <div class="card-content">
+
+        <span class="card-tag">${style.category}</span>
+
+        <h3>${style.name}</h3>
+
+        <p>${style.desc}</p>
+
+        <div class="card-items">
+          대표 아이템<br>
+          ${style.items}
+        </div>
+
+        <div class="more">
+          <span>자세히 알아보기</span>
+          <span>→</span>
+        </div>
+
+      </div>
+
+    </article>
+
+  `).join('');
+
+}
+
+// ==================================
+// DETAIL MODAL
+// ==================================
+
+function openDetail(name) {
+
+  const style = styles.find(s => s.name === name);
+
+  if(!style) return;
+
+  document.getElementById('modal-body').innerHTML = `
+
+    <span class="card-tag">${style.category}</span>
+
+    <h2>${style.name}</h2>
+
+    <p style="letter-spacing:2px;color:#a68b6a">
+      ${style.english}
+    </p>
+
+    <p>${style.detail}</p>
+
+    <h3>대표 아이템</h3>
+    <p>${style.items}</p>
+
+    <h3>추천 코디</h3>
+    <p>${style.recommend}</p>
+
+    <h3>활용할 수 있는 상황</h3>
+    <p>${style.occasions.join(' · ')}</p>
+
+    <h3>참고할 연령대</h3>
+    <p>${style.ages.join(' · ')}</p>
+
+    <p style="margin-top:25px;border-top:1px solid #eee;padding-top:20px">
+      이 분류는 스타일을 탐색하기 위한 참고 자료입니다.
+      연령이나 성별에 관계없이 자신이 좋아하는 스타일을 선택할 수 있습니다.
+    </p>
+
+  `;
+
+  document.getElementById('modal').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+}
+
+function closeOutside(event) {
+  if(event.target.id === 'modal') closeModal();
+}
+
+// ==================================
+// OCCASION QUICK FILTER
+// ==================================
+
+function chooseOccasion(value) {
+
+  selected.occasion = value;
+
+  const buttons = document.querySelectorAll(
+    '#occasion-filter .filter-btn'
+  );
+
+  buttons.forEach(button => {
+    button.classList.toggle(
+      'active',
+      button.dataset.value === value
+    );
+  });
+
+  renderCards();
+
+  document.querySelector('.style-section')
+    .scrollIntoView({behavior:'smooth'});
+}
+
+// SEARCH ENTER KEY
+
+document.getElementById('search').addEventListener(
+  'keydown',
+  event => {
+    if(event.key === 'Enter') renderCards();
+  }
+);
+
+// INITIAL DISPLAY
+
+renderCards();
+
+</script>
+
+</body>
+</html>
