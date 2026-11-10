@@ -1,817 +1,107 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>당신은 정말 잘 자고 있나요?</title>
-
-<!-- 화면이 깜빡이지 않도록 테마를 가장 먼저 적용 (저장된 선택 > 기기 설정 순) -->
-<script>
-(function () {
-  var t = null;
-  try { t = localStorage.getItem('sleep_theme'); } catch (e) {}
-  if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', t);
-})();
-</script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
-
-<style>
-/* ===== 색상 토큰: 밤(dark) / 낮(light) ===== */
-:root, :root[data-theme="dark"] {
-  --bg:#1c1a18; --card:#262321; --inner:#211f1d; --side-bg:rgba(38,35,33,.96);
-  --line:rgba(255,240,220,.10);
-  --text:#e4ded3; --sub:#aea698;
-  --accent:#d6bc8e; --accent-btn:#c9ae82; --accent-hover:#d8c096; --on-accent:#1f1a14;
-  --lack:#d9a39a; --lack-bg:#2c2423; --lack-line:rgba(217,163,154,.28);
-  --excess:#d8bf8a; --excess-bg:#2a2620; --excess-line:rgba(216,191,138,.28);
-  --ideal:#9cbfa6; --ideal-bg:#232823; --ideal-line:rgba(156,191,166,.28);
-  --tag-text:#1a1714;
-  --hl-bg:rgba(201,174,130,.14); --hl-line:rgba(201,174,130,.45);
-  --muted-btn:#3a3632; --muted-btn-h:#46413c; --thumb:#443f3a;
-  --shadow:0 12px 32px rgba(0,0,0,.35);
-  --img-filter:saturate(.75) brightness(.8) sepia(.12);
-  --aura1:#b8864a; --aura2:#8a6a4a; --aura-op:.08;
-}
-:root[data-theme="light"] {
-  --bg:#f3f4f9; --card:#ffffff; --inner:#f6f7fb; --side-bg:rgba(255,255,255,.96);
-  --line:rgba(30,35,60,.12);
-  --text:#232636; --sub:#566077;
-  --accent:#5b4fa3; --accent-btn:#6b5fb0; --accent-hover:#5b4fa3; --on-accent:#ffffff;
-  --lack:#b0413f; --lack-bg:#fbf3f3; --lack-line:rgba(176,65,63,.28);
-  --excess:#8f5f0f; --excess-bg:#fbf7ee; --excess-line:rgba(143,95,15,.28);
-  --ideal:#2b7d61; --ideal-bg:#f1f8f5; --ideal-line:rgba(43,125,97,.28);
-  --tag-text:#ffffff;
-  --hl-bg:rgba(107,95,176,.09); --hl-line:rgba(107,95,176,.40);
-  --muted-btn:#e3e6ef; --muted-btn-h:#d6dae7; --thumb:#c5c9d8;
-  --shadow:0 10px 30px rgba(40,45,80,.10);
-  --img-filter:none;
-  --aura1:#c9c1ee; --aura2:#bcd3ec; --aura-op:.35;
-}
-
-/* ===== 기본 ===== */
-* { box-sizing:border-box; margin:0; padding:0; }
-html { font-size:16px; -webkit-text-size-adjust:100%; }
-body {
-  font-family:"Noto Sans KR","Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  background:var(--bg); color:var(--text);
-  font-size:1rem; line-height:1.75; word-break:keep-all;
-  position:relative; overflow-x:hidden;
-  transition:background-color .3s ease, color .3s ease;
-}
-body::before, body::after {
-  content:""; position:absolute; width:480px; height:480px; border-radius:50%;
-  filter:blur(140px); pointer-events:none; opacity:var(--aura-op); z-index:0;
-}
-body::before { top:40px; left:8%; background:var(--aura1); }
-body::after  { top:900px; right:8%; background:var(--aura2); }
-
-h1, h2, .sidebar-title { font-family:"Noto Serif KR","Nanum Myeongjo",serif; }
-
-button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible {
-  outline:2px solid var(--accent); outline-offset:2px;
-}
-
-/* ===== 전체 레이아웃: 왼쪽 여백 | 본문(가운데) | 오른쪽 여백(자가진단) ===== */
-.container {
-  display:grid;
-  grid-template-columns:1fr minmax(0,720px) 1fr;
-  padding:48px 24px;
-  position:relative; z-index:1;
-}
-.main-content { grid-column:2; grid-row:1; min-width:0; }
-
-/* ===== 테마 전환 버튼 ===== */
-.theme-toggle {
-  position:fixed; top:16px; right:16px; z-index:50;
-  width:44px; height:44px; border-radius:50%;
-  background:var(--card); color:var(--text);
-  border:1px solid var(--line); box-shadow:var(--shadow);
-  font-size:1.2rem; line-height:1; cursor:pointer;
-  display:flex; align-items:center; justify-content:center;
-}
-.theme-toggle:hover { border-color:var(--accent); }
-
-/* ===== 대문 ===== */
-.hero-section {
-  position:relative; border-radius:22px; overflow:hidden;
-  margin-bottom:32px; border:1px solid var(--line); background:#1a1816;
-}
-.hero-bg-img {
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  filter:brightness(.42) saturate(.65) sepia(.15); z-index:1;
-}
-.hero-text-wrap {
-  position:relative; z-index:2; padding:88px 32px; text-align:center; color:#f1ece3;
-  background:linear-gradient(180deg,rgba(26,23,20,.25),rgba(26,23,20,.85));
-}
-.hero-subtitle { font-size:.875rem; font-weight:500; letter-spacing:.1em; color:#dcc9a6; margin-bottom:14px; }
-.hero-title { font-size:clamp(1.9rem,4.5vw,2.5rem); font-weight:700; line-height:1.4; margin-bottom:16px; }
-.hero-desc { font-size:1.05rem; max-width:560px; margin:0 auto; color:#e6e0d5; }
-
-/* ===== 카드 공통 ===== */
-.card {
-  background:var(--card); border:1px solid var(--line); border-radius:22px;
-  padding:36px 32px; margin-bottom:32px; text-align:center;
-  box-shadow:var(--shadow);
-  transition:background-color .3s ease, border-color .3s ease;
-}
-.section-title {
-  font-size:1.5rem; font-weight:700; line-height:1.5; margin-bottom:12px;
-  display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;
-}
-.section-desc { color:var(--sub); font-size:.95rem; margin-bottom:24px; }
-
-/* ===== 가로 스크롤 카드 ===== */
-.drag-scroll {
-  display:flex; gap:18px; overflow-x:auto; padding-bottom:12px; text-align:left;
-  scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; cursor:grab; user-select:none;
-}
-.drag-scroll.active { cursor:grabbing; scroll-snap-type:none; }
-.drag-scroll::-webkit-scrollbar { height:6px; }
-.drag-scroll::-webkit-scrollbar-track { background:var(--inner); border-radius:4px; }
-.drag-scroll::-webkit-scrollbar-thumb { background:var(--thumb); border-radius:4px; }
-.drag-scroll::-webkit-scrollbar-thumb:hover { background:var(--accent); }
-
-.importance-item {
-  flex:0 0 260px; scroll-snap-align:start; background:var(--inner);
-  border:1px solid var(--line); border-radius:16px; overflow:hidden;
-  display:flex; flex-direction:column;
-}
-.importance-item.adverse { border-color:var(--lack-line); }
-.importance-img {
-  width:100%; height:125px; object-fit:cover; background:var(--thumb);
-  pointer-events:none; filter:var(--img-filter);
-}
-.importance-body { padding:20px; flex:1; display:flex; flex-direction:column; }
-.importance-body h4 { font-size:1.05rem; line-height:1.5; margin-bottom:8px; }
-.importance-body p { font-size:.9rem; color:var(--sub); line-height:1.65; margin-bottom:12px; }
-.importance-source-link {
-  margin-top:auto; padding-top:10px; border-top:1px solid var(--line);
-  font-size:.82rem; font-weight:700; color:var(--accent); text-decoration:none;
-}
-.importance-source-link:hover { text-decoration:underline; }
-.adverse .importance-source-link { color:var(--lack); }
-
-/* ===== 영상 ===== */
-.video-card-slide {
-  flex:0 0 280px; scroll-snap-align:start; background:var(--inner);
-  border:1px solid var(--line); border-radius:16px; overflow:hidden;
-  display:flex; flex-direction:column;
-}
-.video-wrapper { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; background:#000; }
-.video-wrapper iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
-.video-drag-shield { position:absolute; inset:0; z-index:10; cursor:grab; }
-.drag-scroll.active .video-drag-shield { cursor:grabbing; }
-.video-info { padding:16px; flex:1; }
-.video-info h4 { font-size:1.05rem; line-height:1.5; margin-bottom:6px; }
-.video-info p { font-size:.9rem; color:var(--sub); line-height:1.6; }
-
-/* ===== 수면 상태 비교 ===== */
-.comparison-grid {
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:18px; margin-top:24px; text-align:left;
-}
-.compare-card { border:1px solid var(--line); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; }
-.compare-card.lack   { background:var(--lack-bg);   border-color:var(--lack-line); }
-.compare-card.excess { background:var(--excess-bg); border-color:var(--excess-line); }
-.compare-card.ideal  { background:var(--ideal-bg);  border-color:var(--ideal-line); }
-.compare-img { width:100%; height:140px; object-fit:cover; background:var(--thumb); filter:var(--img-filter); }
-.compare-body { padding:22px; flex:1; }
-.compare-tag {
-  display:inline-block; font-size:.8rem; font-weight:700; color:var(--tag-text);
-  padding:3px 12px; border-radius:20px; margin-bottom:12px;
-}
-.lack .compare-tag { background:var(--lack); }
-.excess .compare-tag { background:var(--excess); }
-.ideal .compare-tag { background:var(--ideal); }
-.compare-title { font-size:1.15rem; line-height:1.5; margin-bottom:12px; }
-.compare-list { list-style:none; }
-.compare-list li { position:relative; padding-left:16px; margin-bottom:10px; font-size:.92rem; line-height:1.65; color:var(--sub); }
-.compare-list li::before { content:"•"; position:absolute; left:0; color:var(--text); }
-.compare-list b { color:var(--text); font-weight:700; }
-
-/* ===== 고민 털어놓기 ===== */
-.board-form { display:flex; flex-direction:column; gap:12px; margin-top:20px; text-align:left; }
-.board-input, .board-textarea {
-  width:100%; padding:12px 14px; font-size:.95rem; font-family:inherit; color:var(--text);
-  background:var(--inner); border:1px solid var(--line); border-radius:12px; outline:none;
-}
-.board-input::placeholder, .board-textarea::placeholder { color:var(--sub); opacity:.8; }
-.board-input:focus, .board-textarea:focus { border-color:var(--accent); }
-.board-textarea { resize:vertical; min-height:110px; }
-.board-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.board-hint { font-size:.82rem; color:var(--sub); margin-top:-4px; }
-
-.board-submit-btn, .btn-action {
-  background:var(--accent-btn); color:var(--on-accent); border:none; border-radius:10px;
-  font-family:inherit; font-weight:700; cursor:pointer; transition:background-color .2s;
-}
-.board-submit-btn { align-self:flex-end; padding:10px 22px; font-size:.95rem; }
-.board-submit-btn:hover, .btn-action:hover { background:var(--accent-hover); }
-
-.comment-list { margin-top:22px; display:flex; flex-direction:column; gap:12px; text-align:left; }
-.comment-item { background:var(--inner); border:1px solid var(--line); border-radius:14px; padding:16px; }
-.comment-header { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:6px; font-size:.9rem; font-weight:700; color:var(--accent); }
-.comment-meta { display:flex; align-items:center; gap:10px; }
-.comment-date { font-size:.8rem; font-weight:400; color:var(--sub); }
-.btn-delete-comment {
-  background:none; border:1px solid var(--lack-line); color:var(--lack);
-  font-size:.8rem; padding:2px 10px; border-radius:6px; cursor:pointer; font-family:inherit;
-}
-.btn-delete-comment:hover { background:var(--lack); color:var(--tag-text); }
-.comment-content { font-size:.95rem; white-space:pre-wrap; word-break:break-word; }
-.empty-text { font-size:.9rem; color:var(--sub); text-align:center; padding:20px; }
-
-/* 삭제 비밀번호 입력 영역 */
-.delete-box { margin-top:12px; padding-top:12px; border-top:1px dashed var(--line); }
-.delete-row { display:flex; gap:8px; flex-wrap:wrap; }
-.delete-row .board-input { flex:1; min-width:140px; padding:8px 12px; font-size:.9rem; }
-.btn-small {
-  border:1px solid var(--line); background:var(--muted-btn); color:var(--text);
-  font-family:inherit; font-size:.85rem; font-weight:700; padding:8px 14px; border-radius:8px; cursor:pointer;
-}
-.btn-small:hover { background:var(--muted-btn-h); }
-.btn-small.danger { background:var(--lack); color:var(--tag-text); border-color:transparent; }
-.delete-error { margin-top:8px; font-size:.85rem; color:var(--lack); font-weight:700; }
-
-/* ===== 숙면 자가진단: 본문 오른쪽 끝 ~ 화면 오른쪽 끝 사이, 세로 가운데 ===== */
-.sidebar-wrapper {
-  grid-column:3; grid-row:1; align-self:start;
-  position:sticky; top:0; height:100vh;
-  display:flex; align-items:center; justify-content:center;
-  padding:0 12px; z-index:20;
-}
-.sticky-sidebar {
-  width:100%; max-width:300px; max-height:calc(100vh - 48px); overflow-y:auto;
-  background:var(--side-bg); border:1px solid var(--line); border-radius:22px;
-  padding:26px 22px; text-align:center; box-shadow:var(--shadow);
-}
-.sidebar-title { font-size:1.2rem; font-weight:700; margin-bottom:4px; }
-.sidebar-source { font-size:.8rem; color:var(--accent); margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--line); line-height:1.6; }
-.sidebar-note { font-size:.9rem; color:var(--sub); margin-bottom:10px; }
-.btn-action { width:100%; padding:12px; font-size:1rem; margin-top:10px; }
-.btn-action.muted { background:var(--muted-btn); color:var(--text); margin-top:16px; }
-.btn-action.muted:hover { background:var(--muted-btn-h); }
-.hidden { display:none !important; }
-
-.check-list { display:flex; flex-direction:column; gap:12px; margin-top:14px; text-align:left; }
-.check-item { display:flex; align-items:flex-start; gap:10px; font-size:.9rem; line-height:1.55; cursor:pointer; }
-.check-item input { margin-top:4px; width:17px; height:17px; flex-shrink:0; accent-color:var(--accent-btn); cursor:pointer; }
-
-.criteria-box { background:var(--inner); border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:14px; font-size:.85rem; color:var(--sub); }
-.criteria-box b { color:var(--text); }
-.criteria-list { margin-top:4px; list-style:none; }
-.result-box { padding:16px; border-radius:14px; background:var(--inner); border:1px solid var(--line); }
-.result-badge { display:inline-block; font-size:.9rem; font-weight:700; color:var(--tag-text); padding:4px 14px; border-radius:20px; margin-bottom:8px; }
-.result-badge.good { background:var(--ideal); }
-.result-badge.caution { background:var(--excess); }
-.result-badge.danger { background:var(--lack); }
-.result-desc { font-size:.88rem; color:var(--sub); line-height:1.65; }
-
-.stats-section { margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
-.stats-title { font-size:.95rem; font-weight:700; margin-bottom:12px; }
-.stat-bar-group { display:flex; flex-direction:column; gap:8px; }
-.stat-row { font-size:.82rem; padding:8px 10px; border-radius:10px; border:1px solid transparent; }
-.stat-row.my-status-highlight { background:var(--hl-bg); border-color:var(--hl-line); }
-.stat-header { display:flex; justify-content:space-between; gap:8px; margin-bottom:5px; color:var(--sub); text-align:left; }
-.my-status-tag { display:inline-block; margin-left:6px; padding:1px 7px; border-radius:4px; font-size:.72rem; font-weight:700; background:var(--accent-btn); color:var(--on-accent); }
-.stat-bar-bg { width:100%; height:7px; background:var(--thumb); border-radius:4px; overflow:hidden; }
-.stat-bar-fill { height:100%; border-radius:4px; transition:width .3s ease; }
-.stat-bar-fill.good { background:var(--ideal); }
-.stat-bar-fill.caution { background:var(--excess); }
-.stat-bar-fill.danger { background:var(--lack); }
-
-/* ===== 반응형 ===== */
-@media (max-width:1360px) {
-  .container { display:block; max-width:760px; margin:0 auto; }
-  .sidebar-wrapper { position:static; height:auto; padding:0; display:block; }
-  .sticky-sidebar { max-width:none; max-height:none; }
-}
-@media (max-width:600px) {
-  .container { padding:64px 14px 28px; }
-  .card { padding:28px 18px; }
-  .hero-text-wrap { padding:64px 20px; }
-  .board-row { grid-template-columns:1fr; }
-}
-@media (prefers-reduced-motion:reduce) {
-  * { transition:none !important; scroll-behavior:auto !important; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>홈 | 퍼퓸 큐레이션</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
 
-<button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="밝은 화면과 어두운 화면 전환" title="밝은 화면 / 어두운 화면 전환">🌙</button>
-
-<div class="container">
-
-<main class="main-content">
-
-  <!-- 대문 -->
-  <section class="hero-section">
-    <img class="hero-bg-img" src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?q=80&w=1200&auto=format&fit=crop" alt="포근한 수면 분위기">
-    <div class="hero-text-wrap">
-      <div class="hero-subtitle">SLEEP QUALITY &amp; HEALTH</div>
-      <h1 class="hero-title">당신은 정말 잘 자고 있나요?</h1>
-      <p class="hero-desc">수면은 단순한 휴식이 아닙니다. 지친 몸과 마음을 회복하고 내일을 준비하는 삶의 가장 중요한 과정입니다.</p>
+  <!-- 헤더 및 상단 탭 메뉴 (과제 조건 3 & 4) -->
+<header>
+    <div class="header-container">
+      <!-- 로고 클릭 시 홈으로 이동 -->
+      <a href="index.html" class="logo">PERFUMERY</a>
+      
+      <input type="checkbox" id="menu-toggle" class="menu-toggle">
+      <label for="menu-toggle" class="hamburger-btn">☰</label>
+      
+      <nav class="nav-menu">
+        <!-- '홈' 글자는 삭제하고 나머지 4개 메뉴만 유지 -->
+        <a href="menu.html">향수 목록</a>
+        <a href="about.html">브랜드·시향</a>
+        <a href="location.html">오시는 길</a>
+        <a href="contact.html">시향·문의</a>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <!-- 수면의 회복 효과 -->
-  <section class="card">
-    <h2 class="section-title">수면이 우리 몸에 주는 회복의 선물</h2>
-    <p class="section-desc">국제 학술지에 발표된 수면의 신체 회복 메커니즘입니다. 하단 출처를 누르면 원문으로 이동합니다.</p>
-    <div class="drag-scroll">
-      <div class="importance-item">
-        <img class="importance-img" src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=500&auto=format&fit=crop" alt="뇌 신경망">
-        <div class="importance-body">
-          <h4>🧠 뇌 독성 물질 배출 (글림프 시스템)</h4>
-          <p>서파 수면 중 뇌 세포 간격이 넓어져 치매 유발 원인 물질인 베타 아밀로이드를 씻어냅니다.</p>
-          <a href="https://www.science.org/doi/10.1126/science.1241224" target="_blank" rel="noopener noreferrer" class="importance-source-link">🔗 Science (Nedergaard et al.)</a>
-        </div>
-      </div>
-      <div class="importance-item">
-        <img class="importance-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=500&auto=format&fit=crop" alt="면역 반응">
-        <div class="importance-body">
-          <h4>🛡️ T세포 접착력 &amp; 항체 형성</h4>
-          <p>충분한 수면은 면역세포 활성도를 증대시켜 병원체 저항력을 극대화합니다.</p>
-          <a href="https://rupress.org/jem/article/216/3/517/42550/Gsm-coupled-receptor-signaling-inhibits-integrin" target="_blank" rel="noopener noreferrer" class="importance-source-link">🔗 J. Exp. Med. (Besedovsky et al.)</a>
-        </div>
-      </div>
-      <div class="importance-item">
-        <img class="importance-img" src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=500&auto=format&fit=crop" alt="심혈관">
-        <div class="importance-body">
-          <h4>❤️ 자율신경계 교정 및 심혈관 보호</h4>
-          <p>비REM 수면 중 교감신경계 활동이 급감하여 야간 혈압을 안정시키고 심장을 보호합니다.</p>
-          <a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000001078" target="_blank" rel="noopener noreferrer" class="importance-source-link">🔗 Lancet / AHA Guidelines</a>
-        </div>
-      </div>
-      <div class="importance-item">
-        <img class="importance-img" src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=500&auto=format&fit=crop" alt="감정 정조절">
-        <div class="importance-body">
-          <h4>🧘 REM 수면과 감정 안정</h4>
-          <p>스트레스 신경전달물질이 차단된 상태에서 일상의 감정적 기억을 안전하게 정돈합니다.</p>
-          <a href="https://www.cell.com/current-biology/fulltext/S0960-9822(11)01201-9" target="_blank" rel="noopener noreferrer" class="importance-source-link">🔗 Current Biology (Walker et al.)</a>
-        </div>
-      </div>
-      <div class="importance-item">
-        <img class="importance-img" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=500&auto=format&fit=crop" alt="기억 재조합">
-        <div class="importance-body">
-          <h4>📚 해마-대뇌피질 기억 전이</h4>
-          <p>낮 동안 저장된 단기 기억을 대뇌피질로 이동시켜 장기 기억으로 고착화합니다.</p>
-          <a href="https://www.nature.com/articles/nrn2762" target="_blank" rel="noopener noreferrer" class="importance-source-link">🔗 Nature Reviews Neuroscience</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <main>
+    <!-- 1. 히어로 영역 (PRD 5.2 / 과제 조건 5) -->
+    <section class="hero">
+      <h1>나에게 어울리는 향을 발견하는 가장 쉬운 방법</h1>
+      <p>향수를 잘 몰라도 부담 없이 취향을 탐색하고 경험해 보세요.</p>
+      <a href="contact.html" class="btn">시향 프로그램 신청하기</a>
+      <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1000&q=80" alt="고급스러운 향수 병들과 은은한 조명 비주얼" class="hero-img">
+    </section>
 
-  <!-- 수면 불균형의 위험성 -->
-  <section class="card" style="border-top:3px solid var(--lack);">
-    <h2 class="section-title">⚠️ 수면 불균형의 생물학적 위험</h2>
-    <p class="section-desc">만성 수면 부족 또는 과도한 수면이 유발하는 역효과에 대한 의학 연구 결과입니다.</p>
-    <div class="drag-scroll">
-      <div class="importance-item adverse">
-        <img class="importance-img" src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=500&auto=format&fit=crop" alt="유전자 분자 구조">
-        <div class="importance-body">
-          <h4>🧬 DNA 손상 및 유전자 변형</h4>
-          <p>하루 6시간 미만 수면 시 700여 개 유전자 표현형이 변형되고 노화가 가속됩니다.</p>
-          <a href="https://www.pnas.org/doi/10.1073/pnas.1217154110" target="_blank" rel="noopener noreferrer" class="importance-source-link">🔗 PNAS (Surrey 대학 연구팀)</a>
+    <!-- 2. 향 계열별 탐색 (PRD 5.7) -->
+    <section>
+      <h2 class="section-title">취향별 향수 찾기</h2>
+      <p class="section-desc">대표적인 5가지 향 노트 중 원하는 분위기를 선택해 보세요.</p>
+      <div class="scent-grid">
+        <div class="scent-card">
+          <h3>우디 (Woody)</h3>
+          <p>차분하고 포근한 나무 향</p>
+        </div>
+        <div class="scent-card">
+          <h3>플로럴 (Floral)</h3>
+          <p>화사하고 우아한 꽃향기</p>
+        </div>
+        <div class="scent-card">
+          <h3>시트러스 (Citrus)</h3>
+          <p>상큼하고 청량한 감귤 향</p>
+        </div>
+        <div class="scent-card">
+          <h3>스위트 (Sweet)</h3>
+          <p>달콤하고 달달한 바닐라 향</p>
+        </div>
+        <div class="scent-card">
+          <h3>머스크 (Musk)</h3>
+          <p>살결처럼 살가운 부드러운 향</p>
         </div>
       </div>
-      <div class="importance-item adverse">
-        <img class="importance-img" src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=500&auto=format&fit=crop" alt="혈관 내피 독성">
-        <div class="importance-body">
-          <h4>💥 만성 염증 마커 증가</h4>
-          <p>수면 부족은 염증성 단백질(CRP, IL-6) 분비를 늘려 동맥경화 위험을 높입니다.</p>
-          <a href="https://academic.oup.com/eurheartj/article/32/12/1484/502410" target="_blank" rel="noopener noreferrer" class="importance-source-link">🔗 European Heart Journal</a>
-        </div>
-      </div>
-      <div class="importance-item adverse">
-        <img class="importance-img" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=500&auto=format&fit=crop" alt="인슐린 저항성">
-        <div class="importance-body">
-          <h4>🍩 대사 저하 및 식욕 호르몬 교란</h4>
-          <p>인슐린 감수성이 급감하며, 식욕을 촉진하는 그렐린 분비가 폭증합니다.</p>
-          <a href="https://www.acpjournals.org/doi/10.7326/0003-4819-157-8-201210160-00007" target="_blank" rel="noopener noreferrer" class="importance-source-link">🔗 Ann. Intern. Med. (시카고 대학)</a>
-        </div>
-      </div>
-      <div class="importance-item adverse">
-        <img class="importance-img" src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=500&auto=format&fit=crop" alt="과도 수면">
-        <div class="importance-body">
-          <h4>🧠 9시간 초과 과도 수면과 인지력</h4>
-          <p>지속적인 과도한 수면은 수면의 단편화를 가져와 인지력 감퇴를 악화시킵니다.</p>
-          <a href="https://n.neurology.org/content/87/14/1477" target="_blank" rel="noopener noreferrer" class="importance-source-link">🔗 Neurology (Framingham Study)</a>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 가이드 영상 -->
-  <section class="card">
-    <h2 class="section-title">🌙 숙면을 돕는 전문가 추천 가이드 영상</h2>
-    <p class="section-desc">심신 이완에 도움이 되는 실전 영상입니다.</p>
-    <div class="drag-scroll" id="video-slider">
-      <div class="video-card-slide">
-        <div class="video-wrapper">
-          <div class="video-drag-shield" onclick="playVideo(this)"></div>
-          <iframe data-src="https://www.youtube.com/embed/pSQ7fWphoMQ?autoplay=1" title="4-7-8 수면 호흡법" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-        <div class="video-info"><h4>🌬️ 부교감신경 활성 4-7-8 호흡법</h4><p>하버드 의대 출신 앤드류 와일 박사가 제안한 신경계 이완 호흡법입니다.</p></div>
-      </div>
-      <div class="video-card-slide">
-        <div class="video-wrapper">
-          <div class="video-drag-shield" onclick="playVideo(this)"></div>
-          <iframe data-src="https://www.youtube.com/embed/H_4mTwkwHdQ?autoplay=1" title="수면 이완 스트레칭" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-        <div class="video-info"><h4>🧘 자율신경 조절 침상 스트레칭</h4><p>취침 전 부교감 신경 전환을 돕는 저강도 전신 이완 동작 가이드입니다.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 수면 상태 비교 -->
-  <section class="card">
-    <h2 class="section-title">수면 상태에 따른 신체 반응 차이</h2>
-    <div class="comparison-grid">
-      <div class="compare-card lack">
-        <img class="compare-img" src="https://images.unsplash.com/photo-1541199249251-f713e6145474?q=80&w=600&auto=format&fit=crop" alt="피로에 지쳐 힘들어하는 사람">
-        <div class="compare-body">
-          <span class="compare-tag">위험</span>
-          <h3 class="compare-title">❌ 잠이 부족할 때</h3>
-          <ul class="compare-list">
-            <li><b>브레인 포그:</b> 뇌 혈류 감소로 집중이 어려워집니다.</li>
-            <li><b>폭식 유발:</b> 렙틴 저하로 야식과 당이 당깁니다.</li>
-            <li><b>감정 조절 장애:</b> 편도체 과활성화로 불안과 짜증이 늘어납니다.</li>
-            <li><b>면역력 급감:</b> 만성 염증 반응에 쉽게 노출됩니다.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="compare-card excess">
-        <img class="compare-img" src="https://images.unsplash.com/photo-1520206183501-b80df61043c2?q=80&w=600&auto=format&fit=crop" alt="침대에서 늦잠 자는 사람">
-        <div class="compare-body">
-          <span class="compare-tag">주의</span>
-          <h3 class="compare-title">⚠️ 잠이 과할 때 (9시간 초과)</h3>
-          <ul class="compare-list">
-            <li><b>지속되는 찌뿌둥함:</b> 생체 시계 왜곡으로 뇌 활성이 떨어집니다.</li>
-            <li><b>수면 관성 두통:</b> 뇌 혈관 확장으로 머리가 지끈거립니다.</li>
-            <li><b>대사율 저하:</b> 일일 칼로리 소모량이 줄어 체중이 늘 수 있습니다.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="compare-card ideal">
-        <img class="compare-img" src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=600&auto=format&fit=crop" alt="상쾌하고 가벼운 아침">
-        <div class="compare-body">
-          <span class="compare-tag">권장</span>
-          <h3 class="compare-title">✨ 가장 이상적일 때 (7~8시간)</h3>
-          <ul class="compare-list">
-            <li><b>상쾌한 자연 기상:</b> 수면 주기가 순탄하게 완료됩니다.</li>
-            <li><b>인지력 극대화:</b> 사고 판단 속도가 최고조에 달합니다.</li>
-            <li><b>안정적 감정:</b> 스트레스 호르몬이 낮게 유지됩니다.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 복잡한 생각과 고민 털어놓기 -->
-  <section class="card">
-    <h2 class="section-title">💭 복잡한 생각과 고민 털어놓기</h2>
-    <p class="section-desc">잠들기 전 머릿속을 맴도는 생각을 여기에 적어 내려놓아 보세요. 적는 것만으로도 마음이 한결 가벼워질 수 있어요.</p>
-    <div class="board-form">
-      <div class="board-row">
-        <input type="text" id="board-name" class="board-input" placeholder="닉네임 (편하게 정해주세요)" aria-label="닉네임" maxlength="20">
-        <input type="password" id="board-pw" class="board-input" placeholder="삭제용 비밀번호 (4자 이상)" aria-label="삭제용 비밀번호" autocomplete="new-password" maxlength="30">
-      </div>
-      <p class="board-hint">🔒 글을 삭제할 때 이 비밀번호가 필요해요. 잊어버리면 삭제할 수 없으니 기억해 두세요.</p>
-      <textarea id="board-content" class="board-textarea" placeholder="요즘 머릿속을 복잡하게 만드는 생각이나 고민을 편하게 털어놓아 보세요." aria-label="털어놓을 내용"></textarea>
-      <button class="board-submit-btn" onclick="addComment()">털어놓기</button>
-    </div>
-    <div class="comment-list" id="comment-container"></div>
-  </section>
-
-</main>
-
-<!-- 숙면 자가진단 -->
-<aside class="sidebar-wrapper">
-  <div class="sticky-sidebar">
-    <h3 class="sidebar-title">📋 숙면 자가진단</h3>
-    <p class="sidebar-source">출처: 피츠버그 수면 질 지수(PSQI) 및 미국수면재단(NSF)</p>
-
-    <div id="start-section">
-      <p class="sidebar-note">나의 수면 상태를 점검해보세요.</p>
-      <button class="btn-action" onclick="startDiagnosis()">자가진단 시작하기</button>
-    </div>
-
-    <div id="quiz-section" class="hidden">
-      <p class="sidebar-note">지난 한 달간 해당하는 항목에 체크하세요.</p>
-      <div class="check-list">
-        <label class="check-item"><input type="checkbox" class="diag-check"><span>잠자리에 든 후 잠드는 데 30분 이상 소요된다.</span></label>
-        <label class="check-item"><input type="checkbox" class="diag-check"><span>밤중에 1회 이상 깨거나 너무 일찍 깬다.</span></label>
-        <label class="check-item"><input type="checkbox" class="diag-check"><span>아침에 일어났을 때 개운하지 않고 피곤하다.</span></label>
-        <label class="check-item"><input type="checkbox" class="diag-check"><span>낮 동안 업무나 일상에 집중하기 어렵다.</span></label>
-        <label class="check-item"><input type="checkbox" class="diag-check"><span>평소 수면 시간이 7시간 미만이거나 9시간을 넘는다.</span></label>
-        <label class="check-item"><input type="checkbox" class="diag-check"><span>코골이가 심하거나 자는 중 숨이 차는 느낌을 받는다.</span></label>
-        <label class="check-item"><input type="checkbox" class="diag-check"><span>잠들기 전 다리에 원인을 알 수 없는 불편함이 있다.</span></label>
-      </div>
-      <button class="btn-action" onclick="submitDiagnosis()">검사 결과 보기</button>
-    </div>
-
-    <div id="result-section" class="hidden">
-      <div class="criteria-box">
-        <b>📊 판정 기준 (총 7문항 중)</b>
-        <ul class="criteria-list">
-          <li>🟢 <b>양호</b>: 해당 0 ~ 1개</li>
-          <li>🟡 <b>주의</b>: 해당 2 ~ 3개</li>
-          <li>🔴 <b>위험</b>: 해당 4개 이상</li>
-        </ul>
-      </div>
-      <div class="result-box">
-        <span class="result-badge good" id="result-badge">🟢 양호</span>
-        <p class="result-desc" id="result-desc"></p>
-      </div>
-      <div class="stats-section">
-        <h4 class="stats-title">📊 전체 참여자 분포 통계</h4>
-        <div class="stat-bar-group">
-          <div class="stat-row" id="row-good">
-            <div class="stat-header"><span>🟢 양호<span id="mark-good"></span></span><span id="stat-text-good"><strong>0%</strong> (0명)</span></div>
-            <div class="stat-bar-bg"><div class="stat-bar-fill good" id="bar-good" style="width:0%"></div></div>
+    <!-- 3. 이번 주 신상품 (PRD 5.3) -->
+    <section>
+      <h2 class="section-title">이번 주 신상품</h2>
+      <p class="section-desc">새롭게 입고된 센슈얼한 향수를 지금 만나보세요.</p>
+      <div class="product-grid">
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=500&q=80" alt="메종 우디 오드퍼퓸 향수병">
+          <div class="product-info">
+            <span class="brand-name">MAISON WOOD</span>
+            <h3 class="product-name">포레스트 브리즈</h3>
+            <p class="product-desc">비 온 뒤 깊은 숲속의 젖은 흙과 소나무 향</p>
           </div>
-          <div class="stat-row" id="row-caution">
-            <div class="stat-header"><span>🟡 주의<span id="mark-caution"></span></span><span id="stat-text-caution"><strong>0%</strong> (0명)</span></div>
-            <div class="stat-bar-bg"><div class="stat-bar-fill caution" id="bar-caution" style="width:0%"></div></div>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=500&q=80" alt="플로럴 가든 향수 병 모습">
+          <div class="product-info">
+            <span class="brand-name">FLORA LAB</span>
+            <h3 class="product-name">블라썸 파티</h3>
+            <p class="product-desc">봄날 화사하게 피어나는 생화의 은은한 향</p>
           </div>
-          <div class="stat-row" id="row-danger">
-            <div class="stat-header"><span>🔴 위험<span id="mark-danger"></span></span><span id="stat-text-danger"><strong>0%</strong> (0명)</span></div>
-            <div class="stat-bar-bg"><div class="stat-bar-fill danger" id="bar-danger" style="width:0%"></div></div>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=500&q=80" alt="시트러스 노트의 노란색 향수 병">
+          <div class="product-info">
+            <span class="brand-name">CITRUS SENSE</span>
+            <h3 class="product-name">선샤인 오렌지</h3>
+            <p class="product-desc">지중해 햇살을 머금은 싱그러운 자몽과 귤 향</p>
           </div>
-        </div>
+        </article>
       </div>
-      <button class="btn-action muted" onclick="resetDiagnosis()">다시 진단하기</button>
-    </div>
-  </div>
-</aside>
+    </section>
+  </main>
 
-</div>
+  <footer>
+    <p>&copy; 2026 Perfume Curation Platform. All rights reserved.</p>
+    <p>대구광역시 동구 신서동 | 고객센터: 1588-0000</p>
+  </footer>
 
-<script>
-/* ===== 안전한 저장소 접근 ===== */
-function lsGet(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
-function lsSet(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
-function lsJSON(key, fallback) {
-  try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch (e) { return fallback; }
-}
-
-/* ===== 테마 전환 (밤 / 낮) ===== */
-function updateThemeButton() {
-  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
-}
-function toggleTheme() {
-  var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  lsSet('sleep_theme', next);
-  updateThemeButton();
-}
-
-/* ===== 기본 상태 ===== */
-var myDeviceId = lsGet('sleep_device_id');
-if (!myDeviceId) {
-  myDeviceId = 'dev_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
-  lsSet('sleep_device_id', myDeviceId);
-}
-var stats = lsJSON('sleep_real_stats', { good: 0, caution: 0, danger: 0 });
-var hasCounted = lsGet('sleep_has_counted') === 'true';
-var isDragging = false;
-
-window.addEventListener('DOMContentLoaded', function () {
-  updateThemeButton();
-  renderComments();
-  initDragScroll();
-  initInitialVideos();
-});
-
-/* ===== 영상 / 드래그 스크롤 ===== */
-function initInitialVideos() {
-  document.querySelectorAll('.video-drag-shield').forEach(function (shield) {
-    var iframe = shield.nextElementSibling;
-    if (iframe && iframe.dataset.src) iframe.src = iframe.dataset.src.replace('?autoplay=1', '');
-  });
-}
-
-function initDragScroll() {
-  document.querySelectorAll('.drag-scroll').forEach(function (slider) {
-    var isDown = false, startX = 0, scrollLeft = 0;
-    slider.addEventListener('mousedown', function (e) {
-      if (e.target.closest('a')) return;
-      isDown = true; isDragging = false;
-      slider.classList.add('active');
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    });
-    function stop() { isDown = false; slider.classList.remove('active'); }
-    slider.addEventListener('mouseleave', stop);
-    slider.addEventListener('mouseup', stop);
-    slider.addEventListener('mousemove', function (e) {
-      if (!isDown) return;
-      e.preventDefault();
-      var x = e.pageX - slider.offsetLeft;
-      if (Math.abs(x - startX) > 5) isDragging = true;
-      slider.scrollLeft = scrollLeft - (x - startX) * 2;
-    });
-  });
-}
-
-function playVideo(shield) {
-  if (isDragging) return;
-  var iframe = shield.nextElementSibling;
-  if (iframe && iframe.dataset.src) {
-    iframe.src = iframe.dataset.src;
-    shield.style.display = 'none';
-  }
-}
-
-/* ===== 자가진단 ===== */
-function startDiagnosis() {
-  document.getElementById('start-section').classList.add('hidden');
-  document.getElementById('quiz-section').classList.remove('hidden');
-}
-
-function submitDiagnosis() {
-  var count = 0;
-  document.querySelectorAll('.diag-check').forEach(function (cb) { if (cb.checked) count++; });
-  var category = count <= 1 ? 'good' : (count <= 3 ? 'caution' : 'danger');
-
-  if (!hasCounted) {
-    stats[category] += 1;
-    lsSet('sleep_real_stats', JSON.stringify(stats));
-    lsSet('sleep_has_counted', 'true');
-    hasCounted = true;
-  }
-  document.getElementById('quiz-section').classList.add('hidden');
-  document.getElementById('result-section').classList.remove('hidden');
-  showResultUI(category);
-}
-
-function resetDiagnosis() {
-  document.querySelectorAll('.diag-check').forEach(function (cb) { cb.checked = false; });
-  document.getElementById('result-section').classList.add('hidden');
-  document.getElementById('start-section').classList.remove('hidden');
-}
-
-function showResultUI(category) {
-  var keys = ['good', 'caution', 'danger'];
-  keys.forEach(function (k) {
-    document.getElementById('row-' + k).classList.remove('my-status-highlight');
-    document.getElementById('mark-' + k).innerHTML = '';
-  });
-
-  var info = {
-    good: ['🟢 양호 단계', '수면 리듬과 수면의 질이 양호한 편입니다. 현재의 생활 규칙과 수면 환경을 지속적으로 유지하는 것을 추천합니다.'],
-    caution: ['🟡 주의 단계', '수면의 질이 일시적으로 저하된 상태입니다. 취침 전 스마트폰 사용을 줄이고, 본문의 수면 호흡법이나 스트레칭 영상을 실천해보세요.'],
-    danger: ['🔴 위험 단계', '만성 수면 장애 및 피로가 누적된 상태일 수 있습니다. 수면 환경(암막, 온도)을 전면 재점검하고 전문 의료진과의 상담을 권장합니다.']
-  };
-  var badge = document.getElementById('result-badge');
-  badge.className = 'result-badge ' + category;
-  badge.innerText = info[category][0];
-  document.getElementById('result-desc').innerText = info[category][1];
-  document.getElementById('row-' + category).classList.add('my-status-highlight');
-  document.getElementById('mark-' + category).innerHTML = ' <span class="my-status-tag">나의 상태</span>';
-
-  var total = stats.good + stats.caution + stats.danger;
-  if (total > 0) {
-    var pGood = Math.round(stats.good / total * 100);
-    var pCaution = Math.round(stats.caution / total * 100);
-    var p = { good: pGood, caution: pCaution, danger: 100 - (pGood + pCaution) };
-    keys.forEach(function (k) {
-      document.getElementById('stat-text-' + k).innerHTML = '<strong>' + p[k] + '%</strong> (' + stats[k].toLocaleString() + '명)';
-      document.getElementById('bar-' + k).style.width = p[k] + '%';
-    });
-  }
-}
-
-/* ===== 비밀번호 변환 (글마다 다른 값을 섞어 저장) ===== */
-function hashPw(pw, salt) {
-  var str = salt + '::' + pw;
-  var h1 = 0xdeadbeef, h2 = 0x41c6ce57;
-  for (var i = 0; i < str.length; i++) {
-    var ch = str.charCodeAt(i);
-    h1 = Math.imul(h1 ^ ch, 2654435761);
-    h2 = Math.imul(h2 ^ ch, 1597334677);
-  }
-  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
-}
-
-/* ===== 고민 털어놓기 ===== */
-function addComment() {
-  var nameInput = document.getElementById('board-name');
-  var pwInput = document.getElementById('board-pw');
-  var contentInput = document.getElementById('board-content');
-  var name = nameInput.value.trim();
-  var pw = pwInput.value;
-  var content = contentInput.value.trim();
-
-  if (!name || !content) { alert('닉네임과 털어놓을 내용을 모두 입력해 주세요!'); return; }
-  if (pw.length < 4) { alert('삭제용 비밀번호를 4자 이상 입력해 주세요.'); pwInput.focus(); return; }
-
-  var id = 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
-  var comments = lsJSON('sleep_board_comments', []);
-  comments.unshift({
-    id: id,
-    deviceId: myDeviceId,
-    pw: hashPw(pw, id),
-    name: name,
-    content: content,
-    date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-  });
-  lsSet('sleep_board_comments', JSON.stringify(comments));
-  nameInput.value = '';
-  pwInput.value = '';
-  contentInput.value = '';
-  renderComments();
-}
-
-/* 삭제: 비밀번호 입력칸 열기 / 닫기 */
-function openDelete(id) {
-  var box = document.getElementById('del-' + id);
-  if (!box) return;
-  box.classList.toggle('hidden');
-  var err = document.getElementById('err-' + id);
-  if (err) err.textContent = '';
-  var input = document.getElementById('pw-' + id);
-  if (input) { input.value = ''; if (!box.classList.contains('hidden')) input.focus(); }
-}
-
-/* 삭제: 비밀번호 확인 후 삭제 */
-function confirmDelete(id) {
-  var input = document.getElementById('pw-' + id);
-  var err = document.getElementById('err-' + id);
-  var comments = lsJSON('sleep_board_comments', []);
-  var target = comments.filter(function (c) { return c.id === id; })[0];
-  if (!target) { renderComments(); return; }
-
-  if (!input.value) { err.textContent = '비밀번호를 입력해 주세요.'; return; }
-  if (hashPw(input.value, id) !== target.pw) {
-    err.textContent = '비밀번호가 맞지 않습니다.';
-    input.value = '';
-    input.focus();
-    return;
-  }
-  comments = comments.filter(function (c) { return c.id !== id; });
-  lsSet('sleep_board_comments', JSON.stringify(comments));
-  renderComments();
-}
-
-/* 이전에 쓴 글(비밀번호 없음)은 기존 방식으로 삭제 */
-function deleteLegacy(id) {
-  if (!confirm('정말로 이 글을 삭제하시겠습니까?')) return;
-  var comments = lsJSON('sleep_board_comments', []).filter(function (c) { return c.id !== id; });
-  lsSet('sleep_board_comments', JSON.stringify(comments));
-  renderComments();
-}
-
-function renderComments() {
-  var container = document.getElementById('comment-container');
-  var comments = lsJSON('sleep_board_comments', []);
-
-  var modified = false;
-  comments.forEach(function (c) { if (!c.deviceId) { c.deviceId = myDeviceId; modified = true; } });
-  if (modified) lsSet('sleep_board_comments', JSON.stringify(comments));
-
-  if (comments.length === 0) {
-    container.innerHTML = '<p class="empty-text">아직 털어놓은 이야기가 없습니다. 마음속 생각을 편하게 적어보세요.</p>';
-    return;
-  }
-  container.innerHTML = comments.map(function (item) {
-    var delBtn = '';
-    var delBox = '';
-    if (item.pw) {
-      delBtn = '<button class="btn-delete-comment" onclick="openDelete(\'' + item.id + '\')">삭제</button>';
-      delBox =
-        '<div class="delete-box hidden" id="del-' + item.id + '">' +
-          '<div class="delete-row">' +
-            '<input type="password" class="board-input" id="pw-' + item.id + '" placeholder="비밀번호 입력" autocomplete="off" ' +
-              'onkeydown="if(event.key===\'Enter\')confirmDelete(\'' + item.id + '\')">' +
-            '<button class="btn-small danger" onclick="confirmDelete(\'' + item.id + '\')">삭제하기</button>' +
-            '<button class="btn-small" onclick="openDelete(\'' + item.id + '\')">취소</button>' +
-          '</div>' +
-          '<div class="delete-error" id="err-' + item.id + '" role="alert"></div>' +
-        '</div>';
-    } else if (item.deviceId === myDeviceId) {
-      delBtn = '<button class="btn-delete-comment" onclick="deleteLegacy(\'' + item.id + '\')">삭제</button>';
-    }
-    return '<div class="comment-item">' +
-      '<div class="comment-header"><span>' + escapeHtml(item.name) + '</span>' +
-      '<div class="comment-meta"><span class="comment-date">' + item.date + '</span>' + delBtn + '</div></div>' +
-      '<div class="comment-content">' + escapeHtml(item.content) + '</div>' + delBox + '</div>';
-  }).join('');
-}
-
-function escapeHtml(t) {
-  return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-}
-</script>
 </body>
 </html>

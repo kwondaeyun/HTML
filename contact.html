@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예약 및 문의 | 퍼퓸 큐레이션</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+      <!-- 로고 클릭 시 홈으로 이동 -->
+      <a href="index.html" class="logo">PERFUMERY</a>
+      
+      <input type="checkbox" id="menu-toggle" class="menu-toggle">
+      <label for="menu-toggle" class="hamburger-btn">☰</label>
+      
+      <nav class="nav-menu">
+        <!-- '홈' 글자는 삭제하고 나머지 4개 메뉴만 유지 -->
+        <a href="menu.html">향수 목록</a>
+        <a href="about.html">브랜드·시향</a>
+        <a href="location.html">오시는 길</a>
+        <a href="contact.html">시향·문의</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h1 class="section-title">시향 신청 및 예약 문의</h1>
+      <p class="section-desc">궁금한 점이 있거나 시향 키트 신청을 원하시면 아래 양식을 작성해 주세요.</p>
+      
+     <!-- contact.html 의 form 태그 부분만 아래처럼 수정 -->
+<form class="contact-form" action="index.html" method="get">
+  <div class="form-group">
+    <label for="name">성함</label>
+    <input type="text" id="name" name="name" placeholder="홍길동" required>
+  </div>
+
+  <div class="form-group">
+    <label for="phone">연락처</label>
+    <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required>
+  </div>
+
+  <div class="form-group">
+    <label for="type">문의 유형</label>
+    <select id="type" name="type">
+      <option value="sampling">14일 시향 키트 신청</option>
+      <option value="visit">쇼룸 방문 예약</option>
+      <option value="general">기타 상품 문의</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="message">문의 내용 및 선호하는 향 계열</label>
+    <textarea id="message" name="message" placeholder="원하시는 향 계열(우디, 플로럴 등)이나 문의 내용을 남겨주세요."></textarea>
+  </div>
+
+  <button type="submit" class="btn" style="width: 100%; border:none; cursor:pointer;">제출하기</button>
+</form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Perfume Curation Platform. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

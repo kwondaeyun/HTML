@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오시는 길 | 퍼퓸 큐레이션</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/location.css">
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+      <!-- 로고 클릭 시 홈으로 이동 -->
+      <a href="index.html" class="logo">PERFUMERY</a>
+      
+      <input type="checkbox" id="menu-toggle" class="menu-toggle">
+      <label for="menu-toggle" class="hamburger-btn">☰</label>
+      
+      <nav class="nav-menu">
+        <!-- '홈' 글자는 삭제하고 나머지 4개 메뉴만 유지 -->
+        <a href="menu.html">향수 목록</a>
+        <a href="about.html">브랜드·시향</a>
+        <a href="location.html">오시는 길</a>
+        <a href="contact.html">시향·문의</a>
+      </nav>
+    </div>
+  </header>
+
+ <main>
+    <section>
+      <h1 class="section-title">오프라인 쇼룸 오시는 길</h1>
+      <p class="section-desc">방문 전 영업시간과 오시는 길을 확인해 주세요.</p>
+      
+      <!-- 네이버 지도 / 카카오 지도 연결 버튼 영역 -->
+      <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
+        <a href="https://map.naver.com/v5/search/%EB%8C%80%EA%B5%AC%20%EB%8F%99%EA%5C%AC%20%EC%98%81%EC%A7%84%EC%A7%81%EC%97%85%EC%A0%84%EB%AC%B8%ED%95%99%EA%B5%90" target="_blank" class="btn" style="background-color: #03C75A;">
+          네이버지도에서 보기
+        </a>
+        <a href="https://map.kakao.com/?q=%EB%8C%80%EA%B5%AC%20%EB%8F%99%EA%B5%AC%20%EC%98%81%EC%A7%84%EC%A7%81%EC%97%85%EC%A0%84%EB%AC%B8%ED%95%99%EA%B5%90" target="_blank" class="btn" style="background-color: #FEE500; color: #381E1F; font-weight: 700;">
+          카카오지도에서 보기
+        </a>
+      </div>
+
+      <div class="info-list">
+        <div class="info-item">
+          <h4>주소</h4>
+          <p>대구광역시 동구 영진직업전문학교</p>
+        </div>
+        <div class="info-item">
+          <h4>영업시간</h4>
+          <p>오전 9시 10분 ~ 오후 4시 40분</p>
+          <p style="font-size: 0.85rem; color: var(--text-warm-gray); margin-top: 4px;">점심시간: 오후 12:00 ~ 오후 12:50 (주말 및 공휴일 휴무)</p>
+        </div>
+        <div class="info-item">
+          <h4>교통편 안내</h4>
+          <p>인근 지하철 및 시내버스 노선 이용</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Perfume Curation Platform. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
