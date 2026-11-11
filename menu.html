@@ -3,311 +3,238 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>향수 목록 | 퍼퓸 큐레이션</title>
+  <meta name="description" content="시트러스, 플로럴, 우디, 앰버, 아쿠아틱, 그린, 스파이시, 머스크, 구르망, 레더 향수 컬렉션">
+  <title>향수 목록 | PERFUMERY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@400;500;600&display=swap">
+  <!-- 1. 공통 꾸밈 -->
   <link rel="stylesheet" href="css/common.css">
+  <!-- 2. 이 페이지 꾸밈 -->
   <link rel="stylesheet" href="css/menu.css">
-  <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">본문 바로가기</a>
 
-  <header>
-    <div class="header-container">
-      <!-- 클릭 시 홈으로 이동 -->
-      <a href="index.html" class="logo">PERFUMERY</a>
-      
-      <input type="checkbox" id="menu-toggle" class="menu-toggle">
-      <label for="menu-toggle" class="hamburger-btn">☰</label>
-      
-      <nav class="nav-menu">
-        <a href="menu.html" class="active">향수 목록</a>
-        <a href="about.html">브랜드·시향</a>
-        <a href="location.html">오시는 길</a>
-        <a href="contact.html">시향·문의</a>
+  <header class="site-header">
+    <div class="header-inner container">
+      <a class="logo" href="index.html" aria-label="PERFUMERY 홈으로">PERFUMERY</a>
+
+      <!-- 휴대폰 ☰ 버튼 : 체크박스 + label (자바스크립트 없이 동작) -->
+      <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-label="메뉴 열고 닫기">
+      <label for="menu-toggle" class="hamburger-btn" aria-hidden="true"></label>
+
+      <nav class="nav-menu" aria-label="주요 메뉴">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">홈</a></li>
+          <li><a class="nav-link" href="menu.html" aria-current="page">향수 목록</a></li>
+          <li><a class="nav-link" href="about.html">브랜드·시향</a></li>
+          <li><a class="nav-link" href="location.html">오시는 길</a></li>
+          <li><a class="nav-link" href="contact.html">시향·문의</a></li>
+        </ul>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section>
-      <h1 class="section-title">9가지 계열별 향수 컬렉션</h1>
-      <p class="section-desc">자신의 취향과 상황에 꼭 맞는 시그니처 향수를 탐색해 보세요.</p>
-
-      <!-- 1. 시트러스 (Citrus) -->
-      <div style="margin-top: 40px; margin-bottom: 35px;">
-        <h2 style="font-size: 1.35rem; color: var(--accent-brown); border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">
-          1. 시트러스 (Citrus)
-        </h2>
-        <p style="font-size: 0.9rem; color: var(--text-warm-gray); margin: 8px 0 15px;">
-          🍋 레몬, 오렌지, 베르가못, 자몽 등 | 상큼하고 산뜻하며 가볍고 깨끗한 이미지 (추천: 여름, 출근, 일상)
-        </p>
-        <div class="product-grid">
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=500&q=80" alt="선샤인 오렌지 시트러스 향수">
-            <div class="product-info">
-              <span class="brand-name">CITRUS SENSE</span>
-              <h3 class="product-name">선샤인 오렌지</h3>
-              <p class="product-desc">지중해 햇살을 머금은 싱그러운 자몽과 귤 향</p>
-              <p class="product-price">89,000원</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=500&q=80" alt="스파클링 레몬에이드 향수">
-            <div class="product-info">
-              <span class="brand-name">BLUE LEMON</span>
-              <h3 class="product-name">스파클링 레몬에이드</h3>
-              <p class="product-desc">톡톡 튀는 청량감과 시원한 시트러스 향</p>
-              <p class="product-price">85,000원</p>
-            </div>
-          </article>
+  <main id="main">
+    <section aria-labelledby="menu-title">
+      <div class="container">
+        <div class="page-head">
+          <p class="eyebrow">Collection</p>
+          <h1 class="page-title" id="menu-title">향수 목록</h1>
+          <p class="page-desc">10가지 향 계열로 나눈 큐레이션 컬렉션입니다. 마음에 드는 향을 시향 키트로 먼저 체험해 보세요.</p>
         </div>
-      </div>
 
-      <!-- 2. 그린 (Green) -->
-      <div style="margin-bottom: 35px;">
-        <h2 style="font-size: 1.35rem; color: var(--accent-brown); border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">
-          2. 그린 (Green)
-        </h2>
-        <p style="font-size: 0.9rem; color: var(--text-warm-gray); margin: 8px 0 15px;">
-          🌿 풀잎, 허브, 잎사귀, 이끼 등 | 싱그럽고 자연스러우며 숲을 연상시키는 이미지 (추천: 봄, 야외 활동)
-        </p>
-        <div class="product-grid">
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=500&q=80" alt="그린 허브 가든 향수">
-            <div class="product-info">
-              <span class="brand-name">VERDANT LAB</span>
-              <h3 class="product-name">모닝 듀 그린</h3>
-              <p class="product-desc">아침 이슬을 머금은 젖은 풀잎과 세이지 향</p>
-              <p class="product-price">98,000원</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=500&q=80" alt="와일드 민트 이끼 향수">
-            <div class="product-info">
-              <span class="brand-name">BOTANIC</span>
-              <h3 class="product-name">와일드 민트 & 모스</h3>
-              <p class="product-desc">자연의 싱그러움이 가득한 숲속 이끼 향</p>
-              <p class="product-price">105,000원</p>
-            </div>
-          </article>
-        </div>
-      </div>
+        <ul class="chip-list">
+          <li><a class="chip" href="#citrus">시트러스</a></li>
+          <li><a class="chip" href="#floral">플로럴</a></li>
+          <li><a class="chip" href="#woody">우디</a></li>
+          <li><a class="chip" href="#amber">앰버</a></li>
+          <li><a class="chip" href="#aquatic">아쿠아틱</a></li>
+          <li><a class="chip" href="#green">그린</a></li>
+          <li><a class="chip" href="#spicy">스파이시</a></li>
+          <li><a class="chip" href="#musk">머스크</a></li>
+          <li><a class="chip" href="#gourmand">구르망</a></li>
+          <li><a class="chip" href="#leather">레더</a></li>
+        </ul>
 
-      <!-- 3. 플로럴 (Floral) -->
-      <div style="margin-bottom: 35px;">
-        <h2 style="font-size: 1.35rem; color: var(--accent-brown); border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">
-          3. 플로럴 (Floral)
-        </h2>
-        <p style="font-size: 0.9rem; color: var(--text-warm-gray); margin: 8px 0 15px;">
-          🌸 장미, 자스민, 라벤더, 튤립 등 | 꽃향기 중심의 우아하고 부드러운 이미지 (추천: 데이트, 일상, 봄)
-        </p>
-        <div class="product-grid">
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=500&q=80" alt="블라썸 파티 플로럴 향수">
-            <div class="product-info">
-              <span class="brand-name">FLORA LAB</span>
-              <h3 class="product-name">블라썸 파티</h3>
-              <p class="product-desc">봄날 화사하게 피어나는 생화의 은은한 향</p>
-              <p class="product-price">95,000원</p>
+        <ul class="perfume-grid">
+        <li id="citrus">
+          <article class="card perfume-card">
+            <figure class="perfume-media">
+              <img src="images/perfume_03.jpg" alt="선샤인 오렌지 향수병" loading="lazy">
+            </figure>
+            <div class="perfume-body">
+              <p class="perfume-brand">CITRUS SENSE</p>
+              <h2 class="perfume-name">선샤인 오렌지</h2>
+              <p class="perfume-desc">지중해 햇살을 머금은 싱그러운 자몽과 귤 향</p>
+              <div class="perfume-meta">
+                <span class="perfume-note">Citrus · 50ml</span>
+                <span class="perfume-price">79,000원</span>
+              </div>
             </div>
           </article>
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=500&q=80" alt="화이트 재스민 향수">
-            <div class="product-info">
-              <span class="brand-name">PURE FLORA</span>
-              <h3 class="product-name">화이트 재스민</h3>
-              <p class="product-desc">청초하고 우아한 재스민 꽃잎의 풍성함</p>
-              <p class="product-price">102,000원</p>
+        </li>
+        <li id="floral">
+          <article class="card perfume-card">
+            <figure class="perfume-media">
+              <img src="images/perfume_02.jpg" alt="블라썸 파티 향수병" loading="lazy">
+            </figure>
+            <div class="perfume-body">
+              <p class="perfume-brand">FLORA LAB</p>
+              <h2 class="perfume-name">블라썸 파티</h2>
+              <p class="perfume-desc">봄날 화사하게 피어나는 생화의 은은한 향</p>
+              <div class="perfume-meta">
+                <span class="perfume-note">Floral · 50ml</span>
+                <span class="perfume-price">88,000원</span>
+              </div>
             </div>
           </article>
-        </div>
+        </li>
+        <li id="woody">
+          <article class="card perfume-card">
+            <figure class="perfume-media">
+              <img src="images/perfume_01.jpg" alt="포레스트 브리즈 향수병" loading="lazy">
+            </figure>
+            <div class="perfume-body">
+              <p class="perfume-brand">MAISON WOOD</p>
+              <h2 class="perfume-name">포레스트 브리즈</h2>
+              <p class="perfume-desc">비 온 뒤 깊은 숲속의 젖은 흙과 소나무 향</p>
+              <div class="perfume-meta">
+                <span class="perfume-note">Woody · 50ml</span>
+                <span class="perfume-price">98,000원</span>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li id="amber">
+          <article class="card perfume-card">
+            <figure class="perfume-media">
+              <img src="images/perfume_06.jpg" alt="앰버 시더 향수병" loading="lazy">
+            </figure>
+            <div class="perfume-body">
+              <p class="perfume-brand">MAISON WOOD</p>
+              <h2 class="perfume-name">앰버 시더</h2>
+              <p class="perfume-desc">따뜻한 앰버와 삼나무가 어우러진 깊고 차분한 향</p>
+              <div class="perfume-meta">
+                <span class="perfume-note">Amber · 50ml</span>
+                <span class="perfume-price">105,000원</span>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li id="aquatic">
+          <article class="card perfume-card">
+            <figure class="perfume-media">
+              <img src="images/perfume_07.jpg" alt="오션 미스트 향수병" loading="lazy">
+            </figure>
+            <div class="perfume-body">
+              <p class="perfume-brand">BLUE SHORE</p>
+              <h2 class="perfume-name">오션 미스트</h2>
+              <p class="perfume-desc">바다 바람과 시원한 해수가 어우러진 청량한 향</p>
+              <div class="perfume-meta">
+                <span class="perfume-note">Aquatic · 50ml</span>
+                <span class="perfume-price">82,000원</span>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li id="green">
+          <article class="card perfume-card">
+            <figure class="perfume-media">
+              <img src="images/perfume_08.jpg" alt="그린 티 가든 향수병" loading="lazy">
+            </figure>
+            <div class="perfume-body">
+              <p class="perfume-brand">LEAF STUDIO</p>
+              <h2 class="perfume-name">그린 티 가든</h2>
+              <p class="perfume-desc">갓 딴 잎과 허브가 전해 주는 싱그럽고 맑은 향</p>
+              <div class="perfume-meta">
+                <span class="perfume-note">Green · 50ml</span>
+                <span class="perfume-price">86,000원</span>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li id="spicy">
+          <article class="card perfume-card">
+            <figure class="perfume-media">
+              <img src="images/perfume_09.jpg" alt="블랙 페퍼 스파이스 향수병" loading="lazy">
+            </figure>
+            <div class="perfume-body">
+              <p class="perfume-brand">SPICE HOUSE</p>
+              <h2 class="perfume-name">블랙 페퍼 스파이스</h2>
+              <p class="perfume-desc">후추와 시나몬이 만드는 따뜻하고 강렬한 향</p>
+              <div class="perfume-meta">
+                <span class="perfume-note">Spicy · 50ml</span>
+                <span class="perfume-price">95,000원</span>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li id="musk">
+          <article class="card perfume-card">
+            <figure class="perfume-media">
+              <img src="images/perfume_05.jpg" alt="클라우드 머스크 향수병" loading="lazy">
+              <figcaption class="badge badge-best">BEST</figcaption>
+            </figure>
+            <div class="perfume-body">
+              <p class="perfume-brand">SOFT SKIN</p>
+              <h2 class="perfume-name">클라우드 머스크</h2>
+              <p class="perfume-desc">갓 세탁한 리넨처럼 살결에 가볍게 번지는 부드러운 향</p>
+              <div class="perfume-meta">
+                <span class="perfume-note">Musk · 50ml</span>
+                <span class="perfume-price">85,000원</span>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li id="gourmand">
+          <article class="card perfume-card">
+            <figure class="perfume-media">
+              <img src="images/perfume_04.jpg" alt="바닐라 벨벳 향수병" loading="lazy">
+              <figcaption class="badge badge-best">BEST</figcaption>
+            </figure>
+            <div class="perfume-body">
+              <p class="perfume-brand">SWEET ROOM</p>
+              <h2 class="perfume-name">바닐라 벨벳</h2>
+              <p class="perfume-desc">따뜻한 바닐라와 캐러멜이 감싸 안는 달콤하고 포근한 향</p>
+              <div class="perfume-meta">
+                <span class="perfume-note">Gourmand · 50ml</span>
+                <span class="perfume-price">92,000원</span>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li id="leather">
+          <article class="card perfume-card">
+            <figure class="perfume-media">
+              <img src="images/perfume_10.jpg" alt="스웨이드 레더 향수병" loading="lazy">
+            </figure>
+            <div class="perfume-body">
+              <p class="perfume-brand">NOIR ATELIER</p>
+              <h2 class="perfume-name">스웨이드 레더</h2>
+              <p class="perfume-desc">부드러운 가죽과 스웨이드의 깊고 세련된 향</p>
+              <div class="perfume-meta">
+                <span class="perfume-note">Leather · 50ml</span>
+                <span class="perfume-price">110,000원</span>
+              </div>
+            </div>
+          </article>
+        </li>
+        </ul>
       </div>
-
-      <!-- 4. 우디 (Woody) -->
-      <div style="margin-bottom: 35px;">
-        <h2 style="font-size: 1.35rem; color: var(--accent-brown); border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">
-          4. 우디 (Woody)
-        </h2>
-        <p style="font-size: 0.9rem; color: var(--text-warm-gray); margin: 8px 0 15px;">
-          🌲 샌달우드, 시더우드, 베티버 등 | 나무와 숲을 연상시키는 차분하고 묵직한 이미지 (추천: 가을, 겨울, 데일리)
-        </p>
-        <div class="product-grid">
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=500&q=80" alt="포레스트 브리즈 우디 향수">
-            <div class="product-info">
-              <span class="brand-name">MAISON WOOD</span>
-              <h3 class="product-name">포레스트 브리즈</h3>
-              <p class="product-desc">비 온 뒤 깊은 숲속의 젖은 흙과 소나무 향</p>
-              <p class="product-price">128,000원</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=500&q=80" alt="다크 우드 샌달우드 향수">
-            <div class="product-info">
-              <span class="brand-name">DEEP AROMA</span>
-              <h3 class="product-name">다크 우드 샌달우드</h3>
-              <p class="product-desc">묵직하고 차분한 백단향의 깊은 여운</p>
-              <p class="product-price">135,000원</p>
-            </div>
-          </article>
-        </div>
-      </div>
-
-      <!-- 5. 앰버 (Amber) -->
-      <div style="margin-bottom: 35px;">
-        <h2 style="font-size: 1.35rem; color: var(--accent-brown); border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">
-          5. 앰버 (Amber)
-        </h2>
-        <p style="font-size: 0.9rem; color: var(--text-warm-gray); margin: 8px 0 15px;">
-          ✨ 바닐라, 벤조인, 수지, 랩다넘 등 | 따뜻하고 달콤하며 딥한 관능적·고급스러운 이미지 (추천: 가을, 겨울, 저녁)
-        </p>
-        <div class="product-grid">
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=500&q=80" alt="골든 앰버 오드퍼퓸">
-            <div class="product-info">
-              <span class="brand-name">LUXE AMBER</span>
-              <h3 class="product-name">골든 앰버 & 벤조인</h3>
-              <p class="product-desc">깊고 달콤하며 고급스러운 앰버의 스모키 감성</p>
-              <p class="product-price">158,000원</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=500&q=80" alt="미드나잇 수지 바닐라 향수">
-            <div class="product-info">
-              <span class="brand-name">NOCTURNE</span>
-              <h3 class="product-name">미드나잇 앰버</h3>
-              <p class="product-desc">따스함이 피부를 감싸는 매혹적인 밤의 향</p>
-              <p class="product-price">149,000원</p>
-            </div>
-          </article>
-        </div>
-      </div>
-
-      <!-- 6. 아쿠아틱 (Aquatic) -->
-      <div style="margin-bottom: 35px;">
-        <h2 style="font-size: 1.35rem; color: var(--accent-brown); border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">
-          6. 아쿠아틱 (Aquatic)
-        </h2>
-        <p style="font-size: 0.9rem; color: var(--text-warm-gray); margin: 8px 0 15px;">
-          🌊 바다, 물, 해풍, 물방울 등 | 시원하고 청량하며 깨끗하고 산뜻한 이미지 (추천: 여름, 운동 후, 일상)
-        </p>
-        <div class="product-grid">
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=500&q=80" alt="오션 브리즈 아쿠아 향수">
-            <div class="product-info">
-              <span class="brand-name">OCEAN SCENT</span>
-              <h3 class="product-name">디프 오션 브리즈</h3>
-              <p class="product-desc">푸른 바닷바람과 탁 트인 청량함을 담은 향</p>
-              <p class="product-price">92,000원</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=500&q=80" alt="아쿠아 미스트 향수">
-            <div class="product-info">
-              <span class="brand-name">AQUA PURA</span>
-              <h3 class="product-name">샤워 미스트 아쿠아</h3>
-              <p class="product-desc">갓 샤워하고 나온 듯 상쾌하고 깨끗한 물향</p>
-              <p class="product-price">88,000원</p>
-            </div>
-          </article>
-        </div>
-      </div>
-
-      <!-- 7. 구르망 (Gourmand) -->
-      <div style="margin-bottom: 35px;">
-        <h2 style="font-size: 1.35rem; color: var(--accent-brown); border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">
-          7. 구르망 (Gourmand)
-        </h2>
-        <p style="font-size: 0.9rem; color: var(--text-warm-gray); margin: 8px 0 15px;">
-          🍫 바닐라, 초콜릿, 캐러멜, 커피 등 | 디저트처럼 포근하고 매력적인 달콤한 향 (추천: 가을, 겨울, 데이트)
-        </p>
-        <div class="product-grid">
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=500&q=80" alt="달콤한 바닐라 캐러멜 구르망 향수">
-            <div class="product-info">
-              <span class="brand-name">SWEET LAB</span>
-              <h3 class="product-name">바닐라 캐러멜 딜라이트</h3>
-              <p class="product-desc">달콤한 디저트 카페의 아늑한 바닐라 로스팅 향</p>
-              <p class="product-price">112,000원</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=500&q=80" alt="초콜릿 커피 오드퍼퓸">
-            <div class="product-info">
-              <span class="brand-name">CHOCO ROAST</span>
-              <h3 class="product-name">에스프레소 & 다크 초콜릿</h3>
-              <p class="product-desc">진한 다크 초콜릿과 쌉싸름한 커피의 조합</p>
-              <p class="product-price">125,000원</p>
-            </div>
-          </article>
-        </div>
-      </div>
-
-      <!-- 8. 레더 / 스모키 (Leather / Smoky) -->
-      <div style="margin-bottom: 35px;">
-        <h2 style="font-size: 1.35rem; color: var(--accent-brown); border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">
-          8. 레더 / 스모키 (Leather / Smoky)
-        </h2>
-        <p style="font-size: 0.9rem; color: var(--text-warm-gray); margin: 8px 0 15px;">
-          🧥 가죽, 담배, 훈연, 인센스 등 | 강렬하고 개성 있는 중후하고 독특한 이미지 (추천: 가을, 겨울, 특별한 자리)
-        </p>
-        <div class="product-grid">
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=500&q=80" alt="레더 타바코 향수">
-            <div class="product-info">
-              <span class="brand-name">SMOKY STUDIO</span>
-              <h3 class="product-name">블랙 레더 & 타바코</h3>
-              <p class="product-desc">클래식한 가죽 자켓과 은은한 인센스 잔향</p>
-              <p class="product-price">165,000원</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=500&q=80" alt="훈연 인센스 스모키 향수">
-            <div class="product-info">
-              <span class="brand-name">RAW SCENT</span>
-              <h3 class="product-name">스모키 우드 & 앰버</h3>
-              <p class="product-desc">깊은 밤 장작불의 스모키하고 신비로운 아우라</p>
-              <p class="product-price">150,000원</p>
-            </div>
-          </article>
-        </div>
-      </div>
-
-      <!-- 9. 머스크 (Musk) -->
-      <div style="margin-bottom: 35px;">
-        <h2 style="font-size: 1.35rem; color: var(--accent-brown); border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">
-          9. 머스크 (Musk)
-        </h2>
-        <p style="font-size: 0.9rem; color: var(--text-warm-gray); margin: 8px 0 15px;">
-          ☁️ 화이트 머스크, 클린 머스크 등 | 부드럽고 포근한 살냄새의 깨끗하고 은은한 이미지 (추천: 데일리, 사계절)
-        </p>
-        <div class="product-grid">
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=500&q=80" alt="벨벳 머스크 향수">
-            <div class="product-info">
-              <span class="brand-name">SILK & SCENT</span>
-              <h3 class="product-name">벨벳 머스크</h3>
-              <p class="product-desc">포근하고 따스한 살결 냄새의 대명사</p>
-              <p class="product-price">142,000원</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=500&q=80" alt="화이트 코튼 머스크 향수">
-            <div class="product-info">
-              <span class="brand-name">COZY MOMENT</span>
-              <h3 class="product-name">화이트 코튼 머스크</h3>
-              <p class="product-desc">갓 빨래한 이불처럼 포근한 화이트 머스크</p>
-              <p class="product-price">98,000원</p>
-            </div>
-          </article>
-        </div>
-      </div>
-
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 Perfume Curation Platform. All rights reserved.</p>
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-brand">PERFUMERY</p>
+      <address>
+        대구광역시 동구 신서동<br>
+        고객센터 1588-0000 · 오전 9시 10분 ~ 오후 4시 40분
+      </address>
+      <p class="copyright">© 2026 Perfume Curation Platform. All rights reserved.</p>
+    </div>
   </footer>
-
 </body>
 </html>

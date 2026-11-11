@@ -1,0 +1,103 @@
+/* =========================================================
+   menu.css : 향수 목록(menu.html) 전용
+   ========================================================= */
+
+/* 향 계열 바로가기 */
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 24px 0 8px;
+}
+.chip {
+  display: inline-block;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.chip:hover {
+  color: var(--color-on-dark);
+  background: var(--color-dark);
+  border-color: var(--color-dark);
+}
+
+/* 향수 카드 : 휴대폰 1개 → 태블릿 2개 → PC 3개 */
+.perfume-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 24px 0 72px;
+}
+.perfume-grid li { display: flex; }
+.perfume-card { display: flex; flex-direction: column; width: 100%; }
+
+.perfume-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-surface-alt);
+}
+.perfume-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.perfume-card:hover .perfume-media img { transform: scale(1.05); }
+
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 12px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--color-on-dark);
+  background: var(--color-dark);
+}
+.badge-best { color: var(--color-dark); background: var(--color-accent-light); }
+
+.perfume-body { display: flex; flex: 1; flex-direction: column; padding: 22px 22px 26px; }
+.perfume-brand {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent-dark);
+}
+.perfume-name { margin: 6px 0 10px; font-size: 1.3rem; }
+.perfume-desc { flex: 1; font-size: 0.92rem; color: var(--color-muted); }
+
+.perfume-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+.perfume-note {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-accent-dark);
+}
+.perfume-price {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--color-ink);
+}
+
+@media (min-width: 768px) {
+  .perfume-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+}
+@media (min-width: 1024px) {
+  .perfume-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+}
